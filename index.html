@@ -7,7 +7,79 @@
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
 </head>
-<body>
-
+<body class="page">
+  <div class="wrapper">
+    <header class="header">
+      <img src="./images/logo.svg" alt="Логотип">
+    </header>
+    <main class="main">
+      <section class="profile">
+        <div class="profile__avatar"></div>
+        <div class="profile__info">
+          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <button class="profile__button-add"></button>
+          <p class="profile__subtitle">Исследователь океана</p>
+        </div>
+        <button class="profile__button-edit"></button>
+      </section>
+      <section class="popup">
+        <article class="popup__container">
+          <h3 class="popup__title">Редактировать профиль</h3>
+          <input class="popup__input" type="text" value="Жак-Ив Кусто">
+          <input class="popup__input" type="text" value="Исследователь океана">
+          <button class="popup__button-save">Сохранить</button>
+        </article>
+      </section>
+      <section class="elements">
+        <ul class="elements__cards">
+          <li class="elements__card">
+            <img class="elements__card-image" src="./images/karachevsk.jpg" alt="Карачаево-Черкесия">
+            <div class="elements__card-description">
+              <h2 class="elements__card-title">Карачаевск</h2>
+              <img class="elements__card-icon" src="./images/like-icon.svg" alt="Иконка сердца">
+            </div>
+          </li>
+          <li class="elements__card">
+            <img class="elements__card-image" src="./images/elbrus.jpg" alt="Эльбрус">
+            <div class="elements__card-description">
+              <h2 class="elements__card-title">Гора Эльбрус</h2>
+              <img class="elements__card-icon" src="./images/like-icon.svg" alt="Иконка сердца">
+            </div>
+          </li>
+          <li class="elements__card">
+            <img class="elements__card-image" src="./images/dombai.jpg" alt="Домбай">
+            <div class="elements__card-description">
+              <h2 class="elements__card-title">Домбай</h2>
+              <img class="elements__card-icon" src="./images/like-icon.svg" alt="Иконка сердца">
+            </div>
+          </li>
+          <li class="elements__card">
+            <img class="elements__card-image" src="./images/elbrus.jpg" alt="Эльбрус">
+            <div class="elements__card-description">
+              <h2 class="elements__card-title">Гора Эльбрус</h2>
+              <img class="elements__card-icon" src="./images/like-icon.svg" alt="Иконка сердца">
+            </div>
+          </li>
+          <li class="elements__card">
+            <img class="elements__card-image" src="./images/dombai.jpg" alt="Домбай">
+            <div class="elements__card-description">
+              <h2 class="elements__card-title">Домбай</h2>
+              <img class="elements__card-icon" src="./images/like-icon.svg" alt="Иконка сердца">
+            </div>
+          </li>
+          <li class="elements__card">
+            <img class="elements__card-image" src="./images/karachevsk.jpg" alt="Карачаево-Черкесия">
+            <div class="elements__card-description">
+              <h2 class="elements__card-title">Карачаево-Черкесия</h2>
+              <img class="elements__card-icon" src="./images/like-icon.svg" alt="Иконка сердца">
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">© 2020 Mesto Russia</p>
+    </footer>
+  </div>
 </body>
 </html>

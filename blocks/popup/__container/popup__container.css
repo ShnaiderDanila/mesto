@@ -9,3 +9,10 @@
   font-family: "Inter", sans-serif;
   position: relative;
 }
+
+@media (max-width: 425px) {
+  .popup__container {
+    max-width: 282px;
+    padding: 25px;
+  }
+}

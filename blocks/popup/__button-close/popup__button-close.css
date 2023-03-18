@@ -1,7 +1,7 @@
 .popup__button-close {
   padding: 0;
   font-size: 0;
-  background-color: #000;
+  background: transparent;
   border: none;
   cursor: pointer;
   position: absolute;
@@ -9,4 +9,13 @@
   right: 0;
   transform: translate(40px, -40px);
 }
+
+@media (max-width: 425px) {
+  .popup__button-close {
+    transform: translate(0, -40px);
+  }
+}
+
+
+
 

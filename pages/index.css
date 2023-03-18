@@ -3,3 +3,6 @@
 /* Fonts */
 @import url(../vendor/fonts/fonts.css);
 /* Page */
+@import url(../blocks/page/page.css);
+/* Wrapper */
+@import url(../blocks/wrapper/wrapper.css);

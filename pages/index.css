@@ -35,3 +35,6 @@
 @import url(../blocks/elements/__card-title/elements__card-title.css);
 @import url(../blocks/elements/__card-button/elements__card-button.css);
 @import url(../blocks/elements/__card-icon/elements__card-icon.css);
+/* Footer */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);

@@ -1,8 +1,22 @@
 .profile__button-add {
   padding: 0;
-  font-size: 0;
-  background-color: inherit;
-  border: none;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 2px;
   cursor: pointer;
+  width: 150px;
+  min-height: 50px;
+  background-image: url(../../../images/add-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
+@media (max-width: 925px) {
+  .profile__button-add {
+    margin-top: 36px;
+    width: 100%;
+    max-width: 282px;
+  }
+}
+
 

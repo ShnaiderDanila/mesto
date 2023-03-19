@@ -13,9 +13,3 @@
   text-align: center;
 }
 
-@media (max-width: 425px) {
-  .popup__title {
-    font-size: 14px;
-    line-height: 17px;
-  }
-}

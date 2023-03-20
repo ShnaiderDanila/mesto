@@ -17,4 +17,18 @@ function greyAddButton() {
 profileAddButton.addEventListener('mouseover', greyAddButton);
 profileAddButton.addEventListener('mouseout', greyAddButton);
 
+// Elements
+let elements = document.querySelector('.elements');
+let cardButtons = document.querySelectorAll('.elements__card-button');
 
+cardButtons.forEach(function(cardButton) {
+  cardButton.addEventListener('mouseover', function() {
+    cardButton.classList.toggle('elements__card-button_type_hover');
+  });
+  cardButton.addEventListener('mouseout', function() {
+    cardButton.classList.toggle('elements__card-button_type_hover');
+  });
+  cardButton.addEventListener('click', function() {
+    cardButton.classList.toggle('elements__card-button_type_active');
+  });
+});

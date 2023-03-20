@@ -1,21 +1,26 @@
 .profile__info {
-  display: flex;
-  align-items: center;
-  gap: 30px;
+  max-width: 336px;
+  margin: 0 0 0 30px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  align-items: baseline;
+  gap: 16px 18px;
 }
 
 @media (max-width: 925px) {
   .profile__info {
-    flex-direction: column;
+    margin: 26px auto 0;
+    grid-template-columns: auto;
+    gap: 14px 10px;
     text-align: center;
+    position: relative;
   }
 }
 
 @media (max-width: 425px) {
   .profile__info {
-    gap: 26px;
+    max-width: 282px;
   }
 }
-
-
 

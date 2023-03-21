@@ -12,6 +12,10 @@
   transition: all 0.5s ease;
 }
 
+.profile__button-edit:hover {
+  background-image: url(../../../images/edit-button-grey.svg);
+}
+
 @media (max-width: 925px) {
   .profile__button-edit {
     position: absolute;

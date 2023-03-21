@@ -14,3 +14,7 @@
   transition: all 0.5s ease;
 }
 
+.popup__button-save:hover {
+  background-color: #545454;
+}
+

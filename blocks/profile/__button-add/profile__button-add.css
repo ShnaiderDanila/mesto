@@ -13,6 +13,11 @@
   transition: all 0.5s ease;
 }
 
+.profile__button-add:hover {
+  background-image: url(../../../images/add-button-grey.svg);
+  border: 2px solid #545454;
+}
+
 @media (max-width: 925px) {
   .profile__button-add {
     margin: 36px auto 0;

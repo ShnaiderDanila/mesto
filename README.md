@@ -1,17 +1,17 @@
-# Проект: Место
+# Project: Mesto
+URL:
 
-### Обзор
+## Project description
+Mesto - project written in vanilla HTML5, CSS3 and Vanila JS.
+Mesto is an interactive page for posting photos.
+## Features
+- Adaptive and responsive page from 320px to 1280px;
+- Interactive popup-menu.
+## Tech stack
+In the project used:
+- CSS media quaries;
+- CSS Flexbox and GridLayout;
+- BEM methodology.
 
-* Figma
-* Картинки
-
-**Figma**
-
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-
-**Картинки**
-
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+## Plans to refine the project:
+Add vendor prefixes to CSS styles, with Can I Use source.

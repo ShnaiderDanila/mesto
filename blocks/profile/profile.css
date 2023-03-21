@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-@media (max-width: 925px) {
+@media (max-width: 982px) {
   .profile {
     padding: 40px 20px 0;
     flex-direction: column;

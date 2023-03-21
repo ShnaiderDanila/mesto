@@ -3,7 +3,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  width: 22px;
+  min-width: 22px;
   min-height: 19px;
   background-image: url(../../../images/like-icon.svg);
   background-size: cover;

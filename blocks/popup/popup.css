@@ -8,8 +8,3 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.popup__enabled {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

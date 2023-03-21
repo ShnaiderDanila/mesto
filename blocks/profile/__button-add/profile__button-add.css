@@ -5,7 +5,7 @@
   border: 2px solid #fff;
   border-radius: 2px;
   cursor: pointer;
-  width: 150px;
+  min-width: 150px;
   min-height: 50px;
   background-image: url(../../../images/add-button.svg);
   background-repeat: no-repeat;
@@ -18,7 +18,7 @@
   border: 2px solid #545454;
 }
 
-@media (max-width: 925px) {
+@media (max-width: 982px) {
   .profile__button-add {
     margin: 36px auto 0;
     width: 100%;

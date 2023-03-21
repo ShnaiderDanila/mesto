@@ -3,7 +3,7 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
-  width: 32px;
+  min-width: 32px;
   min-height: 32px;
   background-image: url(../../../images/close-icon.svg);
   background-size: cover;
@@ -21,7 +21,7 @@
 
 @media (max-width: 565px) {
   .popup__button-close {
-    width: 20px;
+    min-width: 20px;
     min-height: 20px;
     top: -36px;
     right: 0;

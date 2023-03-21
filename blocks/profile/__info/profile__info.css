@@ -8,7 +8,7 @@
   gap: 16px 18px;
 }
 
-@media (max-width: 925px) {
+@media (max-width: 982px) {
   .profile__info {
     margin: 26px auto 0;
     grid-template-columns: auto;
@@ -18,9 +18,15 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 565px) {
   .profile__info {
     max-width: 282px;
+  }
+}
+
+@media (max-width: 375px) {
+  .profile__info {
+    max-width: 219px;
   }
 }
 

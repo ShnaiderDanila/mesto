@@ -10,7 +10,7 @@ const cardButtons = elements.querySelectorAll('.elements__card-button');
 const popup = document.querySelector('.popup');
 const buttonClose = popup.querySelector('.popup__button-close');
 const buttonSave = popup.querySelector('.popup__button-save');
-const popupForm = popup.querySelector('.popup__form');
+const popupForm = popup.querySelector('.popup__container');
 const nameInput = popup.querySelector('.popup__input_type_name');
 const jobInput = popup.querySelector('.popup__input_type_job');
 
@@ -29,11 +29,11 @@ cardButtons.forEach(function(cardButton) {
 
 // Popup functions
 function popupEnabled() {
-  popup.classList.add('popup__enabled')
+  popup.classList.add('popup_type_opened')
 }
 
 function popupDisabled() {
-  popup.classList.remove('popup__enabled')
+  popup.classList.remove('popup_type_opened')
 }
 
 function handleFormSubmit (evt) {

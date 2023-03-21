@@ -1,15 +1,20 @@
-// Profile
-let profile = document.querySelector('.profile');
-let profileButtonEdit = profile.querySelector('.profile__button-edit');
-// Elements
-let elements = document.querySelector('.elements');
-let cardButtons = document.querySelectorAll('.elements__card-button');
-// Popup
-let popup = document.querySelector('.popup');
-let buttonClose = document.querySelector('.popup__button-close');
-let buttonSave = document.querySelector('.popup__button-save');
+// Profile variables
+const profile = document.querySelector('.profile');
+const profileButtonEdit = profile.querySelector('.profile__button-edit');
+const profileTitle = profile.querySelector('.profile__title');
+const profileSubtitle = profile.querySelector('.profile__subtitle');
+// Elements variables
+const elements = document.querySelector('.elements');
+const cardButtons = elements.querySelectorAll('.elements__card-button');
+// Popup variables
+const popup = document.querySelector('.popup');
+const buttonClose = popup.querySelector('.popup__button-close');
+const buttonSave = popup.querySelector('.popup__button-save');
+const popupForm = popup.querySelector('.popup__form');
+const nameInput = popup.querySelector('.popup__input_type_name');
+const jobInput = popup.querySelector('.popup__input_type_job');
 
-// Elements
+// Elements functions
 cardButtons.forEach(function(cardButton) {
   cardButton.addEventListener('mouseover', function() {
     cardButton.classList.toggle('elements__card-button_type_hover');
@@ -22,16 +27,24 @@ cardButtons.forEach(function(cardButton) {
   });
 });
 
-// Popup
+// Popup functions
 function popupEnabled() {
   popup.classList.add('popup__enabled')
 }
+
 function popupDisabled() {
   popup.classList.remove('popup__enabled')
 }
 
+function handleFormSubmit (evt) {
+  evt.preventDefault();
+  profileTitle.textContent = `${nameInput.value}`;
+  profileSubtitle.textContent = `${jobInput.value}`;
+  popupDisabled();
+}
+
 profileButtonEdit.addEventListener('click', popupEnabled);
 buttonClose.addEventListener('click', popupDisabled);
-
+popupForm.addEventListener('submit', handleFormSubmit);
 
 

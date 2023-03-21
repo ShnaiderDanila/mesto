@@ -1,7 +1,6 @@
 # Project: Mesto
-URL:
-
-## Project description
+URL: https://shnd3r.github.io/mesto/
+## Description
 Mesto - project written in vanilla HTML5, CSS3 and Vanila JS.
 Mesto is an interactive page for posting photos.
 ## Features
@@ -12,6 +11,5 @@ In the project used:
 - CSS media quaries;
 - CSS Flexbox and GridLayout;
 - BEM methodology.
-
-## Plans to refine the project:
+## Plans to refine the project
 Add vendor prefixes to CSS styles, with Can I Use source.

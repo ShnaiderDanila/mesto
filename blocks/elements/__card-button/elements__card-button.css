@@ -11,3 +11,7 @@
   background-repeat: no-repeat;
   transition: all 0.5s ease;
 }
+
+.elements__card-button:hover {
+  opacity: 0.5;
+}

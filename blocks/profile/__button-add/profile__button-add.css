@@ -14,8 +14,7 @@
 }
 
 .profile__button-add:hover {
-  background-image: url(../../../images/add-button-grey.svg);
-  border: 2px solid #545454;
+  opacity: 0.6;
 }
 
 @media (max-width: 982px) {

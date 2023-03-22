@@ -14,6 +14,15 @@
 }
 
 .popup__button-save:hover {
-  background-color: #545454;
+  opacity: 0.8;
 }
+
+@media (max-width: 565px) {
+  .popup__button-save {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+
 

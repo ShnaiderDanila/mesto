@@ -26,5 +26,11 @@
   }
 }
 
+@media (max-width: 565px) {
+  .profile__button-add {
+    background-size: 16px;
+  }
+}
+
 
 

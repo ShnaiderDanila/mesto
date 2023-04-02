@@ -24,48 +24,6 @@
       </section>
       <section class="elements">
         <ul class="elements__cards">
-          <li class="card">
-            <img class="card__image" src="./images/karachevsk.jpg" alt="Карачаево-Черкесия - Сентинский храм">
-            <div class="card__description">
-              <h2 class="card__title">Карачаевск</h2>
-              <button class="card__button" type="button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/elbrus.jpg" alt="Гора Эльбрус на рассвете">
-            <div class="card__description">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="card__button" type="button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/dombai.jpg" alt="Горная территория Домбай в пасмурную погоду">
-            <div class="card__description">
-              <h2 class="card__title">Домбай</h2>
-              <button class="card__button" type="button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/elbrus.jpg" alt="Гора Эльбрус на рассвете">
-            <div class="card__description">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="card__button" type="button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/dombai.jpg" alt="Горная территория Домбай в пасмурную погоду">
-            <div class="card__description">
-              <h2 class="card__title">Домбай</h2>
-              <button class="card__button" type="button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/karachevsk.jpg" alt="Карачаево-Черкесия - Сентинский храм">
-            <div class="card__description">
-              <h2 class="card__title">Карачаево-Черкесия</h2>
-              <button class="card__button" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -84,6 +42,15 @@
       </div>
     </div>
   </div>
+  <template id="card-template">
+    <li class="card">
+      <img class="card__image" alt="Карточка">
+      <div class="card__description">
+        <h2 class="card__title"></h2>
+        <button class="card__button" type="button"></button>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 </html>

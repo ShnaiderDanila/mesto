@@ -1,4 +1,4 @@
-.popup__button-close {
+.button-close {
   padding: 0;
   border: none;
   background-color: transparent;
@@ -15,12 +15,12 @@
   transition: all 0.5s ease;
 }
 
-.popup__button-close:hover {
+.button-close:hover {
   opacity: 0.6;
 }
 
 @media (max-width: 565px) {
-  .popup__button-close {
+  .button-close {
     min-width: 20px;
     min-height: 20px;
     top: -36px;

@@ -32,29 +32,29 @@
     </footer>
     <div class="popup popup-edit">
       <div class="popup__container">
-        <button class="popup-edit__button-close button-close" type="button"></button>
-        <form class="popup__form popup__edit-form" name="edit-profile">
+        <button class="popup__button-close" type="button"></button>
+        <form class="popup__form" name="edit-profile">
           <h3 class="popup__title">Редактировать профиль</h3>
-          <input class="popup__input popup__input_type_name" type="text" name="name">
-          <input class="popup__input popup__input_type_job" type="text" name="job">
-          <button class="popup-edit__button-save button-save" type="submit">Сохранить</button>
+          <input class="popup__input" type="text" name="name" placeholder="Имя">
+          <input class="popup__input" type="text" name="job" placeholder="Профессия">
+          <button class="popup__button-save" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
     <div class="popup popup-add">
       <div class="popup__container">
-        <button class="popup-add__button-close button-close" type="button"></button>
-        <form class="popup__form popup__add-form" name="add-card">
+        <button class="popup__button-close" type="button"></button>
+        <form class="popup__form" name="add-card">
           <h3 class="popup__title">Новое место</h3>
-          <input class="popup__input popup__input_type_place-name" type="text" name="place-name" placeholder="Название">
-          <input class="popup__input popup__input_type_link" type="text" name="link" placeholder="Ссылка на картинку">
-          <button class="popup-add__button-save button-save" type="submit">Создать</button>
+          <input class="popup__input" type="text" name="place-name" placeholder="Название">
+          <input class="popup__input" type="text" name="link" placeholder="Ссылка на картинку">
+          <button class="popup__button-save" type="submit">Создать</button>
         </form>
       </div>
     </div>
     <div class="popup popup-picture">
       <figure class="popup__figure">
-        <button class="popup-picture__button-close button-close" type="button"></button>
+        <button class="popup__button-close" type="button"></button>
         <img class="popup__big-image">
         <figcaption class="popup__figcaption"></figcaption>
       </figure>
@@ -63,7 +63,7 @@
   <template id="card-template">
     <li class="card">
       <img class="card__image">
-      <button class="card__delete-button"></button>
+      <button class="card__delete-button" type="button"></button>
       <div class="card__description">
         <h2 class="card__title"></h2>
         <button class="card__button" type="button"></button>

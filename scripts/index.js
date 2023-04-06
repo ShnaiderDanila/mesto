@@ -12,19 +12,19 @@ const elementsCards = elements.querySelector('.elements__cards');
 // Popup variables
 // Popup Edit
 const popupEdit = document.querySelector('.popup-edit');
-const popupEditButtonClose = popupEdit.querySelector('.popup-edit__button-close');
-const popupEditForm = popupEdit.querySelector('.popup__edit-form');
-const popupEditNameInput = popupEdit.querySelector('.popup__input_type_name');
-const popupEditJobInput = popupEdit.querySelector('.popup__input_type_job');
+const popupEditButtonClose = popupEdit.querySelector('.popup__button-close');
+const popupEditForm = popupEdit.querySelector('.popup__form');
+const popupEditNameInput = popupEdit.querySelector('.popup__input[name="name"]');
+const popupEditJobInput = popupEdit.querySelector('.popup__input[name="job"]');
 // Popup Add
 const popupAdd = document.querySelector('.popup-add');
-const popupAddButtonClose = popupAdd.querySelector('.popup-add__button-close');
-const popupAddForm = popupAdd.querySelector('.popup__add-form');
-const popupAddPlaceNameInput = popupAdd.querySelector('.popup__input_type_place-name');
-const popupAddLinkInput = popupAdd.querySelector('.popup__input_type_link');
+const popupAddButtonClose = popupAdd.querySelector('.popup__button-close');
+const popupAddForm = popupAdd.querySelector('.popup__form');
+const popupAddPlaceNameInput = popupAdd.querySelector('.popup__input[name="place-name"]');
+const popupAddLinkInput = popupAdd.querySelector('.popup__input[name="link"]');
 // Popup Picture
 const popupPicture = document.querySelector('.popup-picture');
-const popupPictureButtonClose = popupPicture.querySelector('.popup-picture__button-close');
+const popupPictureButtonClose = popupPicture.querySelector('.popup__button-close');
 const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
 const popupBigImage = popupPicture.querySelector('.popup__big-image');
 

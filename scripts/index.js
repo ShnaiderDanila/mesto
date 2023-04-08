@@ -1,13 +1,13 @@
-// sectionProfile variables
+// Profile variables
 const profile = document.querySelector('.profile');
 const profileButtonEdit = profile.querySelector('.profile__button-edit');
 const profileButtonAdd = profile.querySelector('.profile__button-add');
 const profileTitle = profile.querySelector('.profile__title');
 const profileSubtitle = profile.querySelector('.profile__subtitle');
 
-// sectionElements variables
-const sectionElements = document.querySelector('.elements');
-const sectionElementsList = sectionElements.querySelector('.elements__cards');
+// Gallery variables
+const gallery = document.querySelector('.gallery');
+const galleryList = gallery.querySelector('.gallery__list');
 
 // Popup variables
 // Popup Edit
@@ -62,7 +62,7 @@ popupEditForm.addEventListener('submit', handleEditFormSubmit);
 popupPictureButtonClose.addEventListener('click', () => closePopup(popupPicture));
 
 // Function add card
-function addCard(name, link) {
+function createCard(name, link) {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const cardTitle = card.querySelector('.card__title');
@@ -84,19 +84,19 @@ function addCard(name, link) {
     popupBigImage.alt = cardImage.alt;
     popupFigcaption.textContent = cardTitle.textContent;
   });
-  // Функция добавления карточки на страницу
-  sectionElementsList.prepend(card);
-}
+  return card;
+};
 
 // Добавление начальных карточек из массива
-initialCards.reverse().forEach(item => {
-  addCard(item.name, item.link);
+initialCards.forEach(item => {
+  galleryList.append(createCard(item.name, item.link));
 });
 
 // PopupAdd functions
 function handleAddFormSubmit (evt) {
   evt.preventDefault();
-  addCard(popupAddPlaceNameInput.value,  popupAddLinkInput.value);
+  // Добавление новой карточки
+  galleryList.prepend(createCard(popupAddPlaceNameInput.value, popupAddLinkInput.value));
   closePopup(popupAdd);
   popupAddForm.reset();
 };

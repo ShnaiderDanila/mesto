@@ -8,12 +8,8 @@
   line-height: 17px;
 }
 
-.popup__input:first-of-type {
-  margin: 54px 0 30px;
+.popup__input::placeholder {
+  color: #C4C4C4;
 }
 
-@media (max-width: 565px) {
-  .popup__input:first-of-type {
-    margin: 75px 0 30px;
-  }
-}
+

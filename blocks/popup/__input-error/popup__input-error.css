@@ -2,6 +2,7 @@
   font-size: 12px;
   line-height: 15px;
   color: #FF0000;
-  margin: 5px 0 0 0;
-  display: none;
+  min-height: 30px;
+  display: block;
+  visibility: hidden;
 }

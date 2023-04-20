@@ -9,39 +9,37 @@ const validationConfig = {
 };
 
 // Функция скрытия ошибки
-function hideError (form, input, config) {
-  const errorElement = form.querySelector(`#error-${input.id}`);
+function hideError (input, errorElement, config) {
   input.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
   errorElement.textContent = '';
 };
 
 // Функция отображения ошибки
-function showError (form, input, config) {
-  const errorElement = form.querySelector(`#error-${input.id}`);
+function showError (input, errorElement, config) {
   input.classList.add(config.inputErrorClass);
   errorElement.textContent = input.validationMessage;
   errorElement.classList.add(config.errorClass);
 };
 
-// Функция проверки на валидность инпута
-function checkInputValidity (form, input, config) {
-    if (input.validity.valid) {
-      hideError(form, input, config);
-    } else {
-      showError(form, input, config);
-    }
+// Функция проверки инпута на валидность
+function checkInputValidity (input, errorElement, config) {
+  if (input.validity.valid) {
+    hideError(input, errorElement, config);
+  } else {
+    showError(input, errorElement, config);
+  }
 };
 
-// Проверка формы на валидность
-function checkFormValidity(formInputsArray) {
+// Функция проверки формы на валидность
+function checkFormValidity (formInputsArray) {
   return formInputsArray.every((input) => {
     return input.validity.valid;
   });
 };
 
-// Переключение состояния кнопки в зависимости от валидности формы
-function toggleButtonValidity(formInputsArray, saveButton, config) {
+// Функция переключение состояния кнопки, в зависимости от валидности формы
+function toggleButtonValidity (formInputsArray, saveButton, config) {
   if (checkFormValidity(formInputsArray)) {
     saveButton.removeAttribute('disabled');
     saveButton.classList.remove(config.inactiveButtonClass);
@@ -53,18 +51,24 @@ function toggleButtonValidity(formInputsArray, saveButton, config) {
 
 // Функция включения валидации на форме
 function enableValidation (config) {
+  // Нахождение всех форм на странице
   const popupForms = document.querySelectorAll(config.formSelector);
   popupForms.forEach(popupForm => {
     const saveButton = popupForm.querySelector(config.submitButtonSelector);
     const formInputs = popupForm.querySelectorAll(config.inputSelector);
     const formInputsArray = Array.from(formInputs);
+    // Проверка валидности кнопки, до ввода данных пользователем
     toggleButtonValidity(formInputsArray, saveButton, config);
+    // Скрытие ошибок в инпутах, до ввода данных пользователем
     formInputsArray.forEach(input => {
-      hideError(popupForm, input, config);
+      const errorElement = popupForm.querySelector(`#error-${input.id}`);
+      hideError(input, errorElement, config);
+    // Проверка данных на валидность
       input.addEventListener('input', () => {
-        checkInputValidity(popupForm, input, config);
+        checkInputValidity(input, errorElement, config);
         toggleButtonValidity(formInputsArray, saveButton, config);
       });
     });
   });
 };
+

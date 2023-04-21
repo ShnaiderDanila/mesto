@@ -49,6 +49,14 @@ function toggleButtonValidity (formInputsArray, saveButton, config) {
   };
 };
 
+// Функция установки события submit на все попапы с формой
+function setSubmitListener (popupForm) {
+  popupForm.addEventListener('submit', evt => {
+    evt.preventDefault();
+    popupForm.reset();
+  });
+}
+
 // Функция включения валидации на форме
 function enableValidation (config) {
   // Нахождение всех форм на странице
@@ -57,8 +65,7 @@ function enableValidation (config) {
     const saveButton = popupForm.querySelector(config.submitButtonSelector);
     const formInputs = popupForm.querySelectorAll(config.inputSelector);
     const formInputsArray = Array.from(formInputs);
-    // Проверка валидности кнопки, до ввода данных пользователем
-    toggleButtonValidity(formInputsArray, saveButton, config);
+    setSubmitListener(popupForm);
     // Скрытие ошибок в инпутах, до ввода данных пользователем
     formInputsArray.forEach(input => {
       const errorElement = popupForm.querySelector(`#error-${input.id}`);
@@ -72,3 +79,4 @@ function enableValidation (config) {
   });
 };
 
+enableValidation(validationConfig);

@@ -29,28 +29,45 @@ const popupBigImage = popupPicture.querySelector('.popup__big-image');
 const cardTemplate = document.querySelector('#card-template').content;
 
 // Функция закрытия попапа
-function closePopup (popup, form) {
+function closePopup (popup) {
   popup.classList.remove('popup_is-opened');
-  if (popup !== popupPicture) {
-    form.reset();
-  }
+  document.removeEventListener('keydown', closePopupEscKey);
 };
 
 // Функция открытия попапа
-function openPopup (popup, form) {
+function openPopup (popup) {
   popup.classList.add('popup_is-opened');
-  if (popup !== popupPicture) {
-    enableValidation(validationConfig);
-  }
-  // Функция закрытия попапа клавишей Esc
-  function closePopupEscKey (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup, form);
-    };
-    document.removeEventListener('keydown', closePopupEscKey);
-  }
   document.addEventListener('keydown', closePopupEscKey);
 };
+
+// Функция закрытия попапа кликом на оверлей
+function closePopupOverlay (evt) {
+  if (evt.target.classList.contains('popup')) {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closePopup(openedPopup);
+  };
+}
+
+// Функция закрытия попапа нажатием клавиши Esc
+function closePopupEscKey (evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closePopup(openedPopup);
+  };
+}
+
+// Функция добавления слушателей событий закрытия попапов
+function addEventsClosePopup () {
+  const popups = document.querySelectorAll('.popup');
+  popups.forEach(popup => {
+    // Функция закрытия попапа кликом на крестик
+    const popupButtonClose = popup.querySelector('.popup__button-close')
+    popupButtonClose.addEventListener('click', () => closePopup(popup));
+    popup.addEventListener('click', closePopupOverlay);
+});
+}
+
+addEventsClosePopup();
 
 // Функция создания карточки
 function createCard (name, link) {
@@ -83,59 +100,51 @@ initialCards.forEach(item => {
   galleryList.append(createCard(item.name, item.link));
 });
 
+// Функция проверки состояния кнопки, в зависимости от валидности формы
+function checkSaveButtonState (popupForm, config) {
+  const saveButton = popupForm.querySelector(config.submitButtonSelector);
+  const formInputs = popupForm.querySelectorAll(config.inputSelector);
+  const formInputsArray = Array.from(formInputs);
+  toggleButtonValidity(formInputsArray, saveButton, config)
+}
+
 // Функции PopupEdit
 // Функция активациии PopupEdit
-function enableEditPopup (popup) {
+function enableEditPopup (popup, popupForm, config) {
   popupEditNameInput.value = profileTitle.textContent;
   popupEditJobInput.value = profileSubtitle.textContent;
   openPopup(popup);
+  checkSaveButtonState(popupForm, config);
 };
 
 // Обработка PopupEdit
-function handleEditFormSubmit (evt) {
-  evt.preventDefault();
+function handleEditFormSubmit () {
   profileTitle.textContent = popupEditNameInput.value;
   profileSubtitle.textContent = popupEditJobInput.value;
-  closePopup(popupEdit, popupEditForm);
+  closePopup(popupEdit);
 };
 
-function enableEditPopup(popup, form) {
-  popupEditNameInput.value = profileTitle.textContent;
-  popupEditJobInput.value = profileSubtitle.textContent;
-  openPopup(popup, form)
-}
-
-function addEventsClosePopup () {
-  const popups = document.querySelectorAll('.popup');
-  popups.forEach(popup => {
-    const popupForm = popup.querySelector('.popup__form');
-    // Функция закрытия попапа кликом на крестик
-    const popupButtonClose = popup.querySelector('.popup__button-close')
-    popupButtonClose.addEventListener('click', () => closePopup(popup, popupForm));
-    // Функция закрытия попапа кликом на оверлей
-    function closePopupOverlay (evt) {
-      if (evt.target.classList.contains('popup')) {
-        closePopup(popup, popupForm);
-      };
-    }
-    popup.addEventListener('click', closePopupOverlay);
-});
-}
-
-addEventsClosePopup();
-
 // Слушатели событий PopupEdit
-profileButtonEdit.addEventListener('click', () => enableEditPopup(popupEdit, popupEditForm));
+profileButtonEdit.addEventListener('click', () => enableEditPopup(popupEdit, popupEditForm, validationConfig));
 popupEditForm.addEventListener('submit', handleEditFormSubmit);
 
 // Функции PopupAdd
-function handleAddFormSubmit (evt) {
-  evt.preventDefault();
+// Функция активациии PopupAdd
+function enableAddPopup (popup, popupForm, config) {
+  openPopup(popup);
+  checkSaveButtonState(popupForm, config);
+}
+
+function handleAddFormSubmit () {
   // Добавление новой карточки
   galleryList.prepend(createCard(popupAddPlaceNameInput.value, popupAddLinkInput.value));
-  closePopup(popupAdd, popupAddForm);
+  closePopup(popupAdd);
 };
 
 // Слушатели событий PopupAdd
-profileButtonAdd.addEventListener('click', () => openPopup(popupAdd, popupAddForm));
+profileButtonAdd.addEventListener('click', () => enableAddPopup(popupAdd, popupAddForm, validationConfig));
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
+
+
+
+

@@ -26,9 +26,6 @@ const popupPicture = document.querySelector('.popup-picture');
 const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
 const popupBigImage = popupPicture.querySelector('.popup__big-image');
 
-// CardTemplate
-const cardTemplate = document.querySelector('#card-template').content;
-
 // Функция закрытия попапа
 function closePopup (popup) {
   popup.classList.remove('popup_is-opened');
@@ -133,44 +130,35 @@ initialCards.forEach(item => {
   galleryList.append(card);
 });
 
-
-// Функция проверки состояния кнопки, в зависимости от валидности формы
-function checkSaveButtonState (popupForm, config) {
-  const saveButton = popupForm.querySelector(config.submitButtonSelector);
-  const formInputs = popupForm.querySelectorAll(config.inputSelector);
-  const formInputsArray = Array.from(formInputs);
-  toggleButtonValidity(formInputsArray, saveButton, config)
-}
-
 // Функции PopupEdit
 // Функция активациии PopupEdit
-function enableEditPopup (popup, popupForm, config) {
+function enableEditPopup (popup) {
   popupEditNameInput.value = profileTitle.textContent;
   popupEditJobInput.value = profileSubtitle.textContent;
   openPopup(popup);
-  checkSaveButtonState(popupForm, config);
+  validateFormEditProfile.enableValidation();
 };
 
 // Обработка PopupEdit
-function handleEditFormSubmit () {
+function handleEditFormSubmit() {
   profileTitle.textContent = popupEditNameInput.value;
   profileSubtitle.textContent = popupEditJobInput.value;
   closePopup(popupEdit);
 };
 
 // Слушатели событий PopupEdit
-profileButtonEdit.addEventListener('click', () => enableEditPopup(popupEdit, popupEditForm, validationConfig));
+profileButtonEdit.addEventListener('click', () => enableEditPopup(popupEdit));
 popupEditForm.addEventListener('submit', handleEditFormSubmit);
 
 // Функции PopupAdd
 // Функция активациии PopupAdd
-function enableAddPopup (popup, popupForm, config) {
+function enableAddPopup (popup) {
   openPopup(popup);
-  checkSaveButtonState(popupForm, config);
+  validateFormAddCard.enableValidation();
 }
 
 function handleAddFormSubmit () {
-  // Добавление новой карточки
+  // Добавление новой карточки по классу Card
   const popupAddObj = {
     name:  popupAddPlaceNameInput.value,
     link:  popupAddLinkInput.value,
@@ -182,7 +170,7 @@ function handleAddFormSubmit () {
 };
 
 // Слушатели событий PopupAdd
-profileButtonAdd.addEventListener('click', () => enableAddPopup(popupAdd, popupAddForm, validationConfig));
+profileButtonAdd.addEventListener('click', () => enableAddPopup(popupAdd));
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
 

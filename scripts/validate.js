@@ -8,75 +8,93 @@ const validationConfig = {
   errorClass: 'popup__input-error_active'
 };
 
-// Функция скрытия ошибки
-function hideError (input, errorElement, config) {
-  input.classList.remove(config.inputErrorClass);
-  errorElement.classList.remove(config.errorClass);
-  errorElement.textContent = '';
-};
+class FormValidator {
+  constructor(config, form) {
+    this._form = form;
+    this._inputSelector = config.inputSelector;
+    this._submitButtonSelector = config.submitButtonSelector;
+    this._inactiveButtonClass = config.inactiveButtonClass;
+    this._inputErrorClass = config.inputErrorClass;
+    this._errorClass = config.errorClass;
+  }
 
-// Функция отображения ошибки
-function showError (input, errorElement, config) {
-  input.classList.add(config.inputErrorClass);
-  errorElement.textContent = input.validationMessage;
-  errorElement.classList.add(config.errorClass);
-};
+  // Метод скрытия ошибки
+  _hideError(input, errorElement) {
+    input.classList.remove(this._inputErrorClass);
+    errorElement.classList.remove(this._errorClass);
+    errorElement.textContent = '';
+  }
 
-// Функция проверки инпута на валидность
-function checkInputValidity (input, errorElement, config) {
-  if (input.validity.valid) {
-    hideError(input, errorElement, config);
-  } else {
-    showError(input, errorElement, config);
+  // Метод отображения ошибки
+  _showError (input, errorElement) {
+    input.classList.add(this._inputErrorClass);
+    errorElement.textContent = input.validationMessage;
+    errorElement.classList.add(this._errorClass);
+  };
+
+
+  // Метод проверки валидности инпутов
+  _checkInputValidity (input, errorElement) {
+    if (input.validity.valid) {
+      this._hideError(input, errorElement);
+    } else {
+      this._showError(input, errorElement);
+    }
+  };
+
+  // Метод проверки валидности формы
+  _checkFormValidity (formInputsArray) {
+    return formInputsArray.every((input) => {
+      return input.validity.valid;
+    });
+  };
+
+
+  // Метод переключения состояния кнопки в зависимости от валидности формы
+  _toggleButtonValidity(formInputsArray, saveButton) {
+    if (this._checkFormValidity(formInputsArray)) {
+      saveButton.removeAttribute('disabled');
+      saveButton.classList.remove(this._inactiveButtonClass);
+    } else {
+      saveButton.setAttribute('disabled', '');
+      saveButton.classList.add(this._inactiveButtonClass);
+    };
+  };
+
+  // ПОДУМАТЬ НАД ЭТИМ И ДОБАВВИТЬ МЕТОД СЛУШАТЕЛЕЙ В ВАЛИДАЦИЮ
+  // Метод обработки формы
+  _setSubmitListener(form) {
+    form.addEventListener('submit', evt => {
+      evt.preventDefault();
+      form.reset();
+    });
+  }
+
+  _setEventListeners(input, errorElement, formInputsArray, saveButton) {
+    input.addEventListener('input', () => {
+      this._checkInputValidity(input, errorElement);
+      this._toggleButtonValidity(formInputsArray, saveButton);
+    });
+  }
+
+  enableValidation() {
+    const form = document.querySelector(this._form);
+    const saveButton = form.querySelector(this._submitButtonSelector);
+    const formInputs = form.querySelectorAll(this._inputSelector);
+    const formInputsArray = Array.from(formInputs);
+    this._setSubmitListener(form);
+    this._toggleButtonValidity(formInputsArray, saveButton);
+    formInputsArray.forEach(input => {
+      const errorElement = form.querySelector(`#error-${input.id}`);
+      this._hideError(input, errorElement);
+      this._setEventListeners(input, errorElement, formInputsArray, saveButton);
+    });
   }
 };
 
-// Функция проверки формы на валидность
-function checkFormValidity (formInputsArray) {
-  return formInputsArray.every((input) => {
-    return input.validity.valid;
-  });
-};
+const validateFormEditProfile = new FormValidator(validationConfig, '.popup__form[name="edit-profile"]');
+const validateFormAddCard = new FormValidator(validationConfig, '.popup__form[name="add-card"]');
 
-// Функция переключение состояния кнопки, в зависимости от валидности формы
-function toggleButtonValidity (formInputsArray, saveButton, config) {
-  if (checkFormValidity(formInputsArray)) {
-    saveButton.removeAttribute('disabled');
-    saveButton.classList.remove(config.inactiveButtonClass);
-  } else {
-    saveButton.setAttribute('disabled', '');
-    saveButton.classList.add(config.inactiveButtonClass);
-  };
-};
 
-// Функция установки события submit на все попапы с формой
-function setSubmitListener (popupForm) {
-  popupForm.addEventListener('submit', evt => {
-    evt.preventDefault();
-    popupForm.reset();
-  });
-}
 
-// Функция включения валидации на форме
-function enableValidation (config) {
-  // Нахождение всех форм на странице
-  const popupForms = document.querySelectorAll(config.formSelector);
-  popupForms.forEach(popupForm => {
-    const saveButton = popupForm.querySelector(config.submitButtonSelector);
-    const formInputs = popupForm.querySelectorAll(config.inputSelector);
-    const formInputsArray = Array.from(formInputs);
-    setSubmitListener(popupForm);
-    // Скрытие ошибок в инпутах, до ввода данных пользователем
-    formInputsArray.forEach(input => {
-      const errorElement = popupForm.querySelector(`#error-${input.id}`);
-      hideError(input, errorElement, config);
-    // Проверка данных на валидность
-      input.addEventListener('input', () => {
-        checkInputValidity(input, errorElement, config);
-        toggleButtonValidity(formInputsArray, saveButton, config);
-      });
-    });
-  });
-};
 
-enableValidation(validationConfig);

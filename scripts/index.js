@@ -1,3 +1,6 @@
+import { validationConfig, FormValidator } from './FormValidator.js';
+import { initialCards, Card } from './Card.js';
+
 // Переменные Profile
 const profile = document.querySelector('.profile');
 const profileButtonEdit = profile.querySelector('.profile__button-edit');
@@ -21,10 +24,9 @@ const popupAddForm = popupAdd.querySelector('.popup__form');
 const popupAddPlaceNameInput = popupAdd.querySelector('.popup__input[name="place-name"]');
 const popupAddLinkInput = popupAdd.querySelector('.popup__input[name="link"]');
 
-// PopupPicture
-const popupPicture = document.querySelector('.popup-picture');
-const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
-const popupBigImage = popupPicture.querySelector('.popup__big-image');
+// PopupFormObj
+const validateFormEditProfile = new FormValidator(validationConfig, '.popup__form[name="edit-profile"]');
+const validateFormAddCard = new FormValidator(validationConfig, '.popup__form[name="add-card"]');
 
 // Функция закрытия попапа
 function closePopup (popup) {
@@ -66,62 +68,6 @@ function addEventsClosePopup () {
 }
 
 addEventsClosePopup();
-
-// Создание класса Card
-class Card {
-  constructor(data, cardTemplate) {
-    this._name = data.name;
-    this._link = data.link;
-    this._cardTemplate = cardTemplate;
-  }
-
-  _getTemplate() {
-    const cardElement = document
-    .querySelector(this._cardTemplate)
-    .content
-    .querySelector('.card')
-    .cloneNode(true);
-    return cardElement;
-  }
-
-  generateCard() {
-    this._card = this._getTemplate();
-    this._setEventListeners();
-    this._card.querySelector('.card__image').src = this._link;
-    this._card.querySelector('.card__image').alt = this._name;
-    this._card.querySelector('.card__title').textContent = this._name;
-    return this._card;
-  }
-
-  _likeCard(evt) {
-    evt.target.classList.toggle('card__button_is-active');
-  }
-
-  _deleteCard() {
-    this._card.remove();
-  }
-
-  _openPopupImage() {
-    openPopup(popupPicture);
-    popupBigImage.src = this._card.querySelector('.card__image').src;
-    popupBigImage.alt = this._card.querySelector('.card__image').alt;
-    popupFigcaption.textContent = this._card.querySelector('.card__title').textContent;
-  }
-
-  _setEventListeners() {
-    this._card.querySelector('.card__image').addEventListener('click', () => {
-      this._openPopupImage();
-    });
-
-    this._card.querySelector('.card__delete-button').addEventListener('click', () => {
-      this._deleteCard();
-    });
-
-    this._card.querySelector('.card__button').addEventListener('click', (evt) => {
-      this._likeCard(evt);
-    });
-  }
-}
 
 // Добавление начальных карт с данными из массива initialCards;
 initialCards.forEach(item => {
@@ -173,6 +119,6 @@ function handleAddFormSubmit () {
 profileButtonAdd.addEventListener('click', () => enableAddPopup(popupAdd));
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
-
+export { openPopup };
 
 

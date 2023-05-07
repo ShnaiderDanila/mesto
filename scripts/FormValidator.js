@@ -8,6 +8,7 @@ const validationConfig = {
   errorClass: 'popup__input-error_active'
 };
 
+// Создание класса FormValidator
 class FormValidator {
   constructor(config, form) {
     this._form = form;
@@ -32,7 +33,6 @@ class FormValidator {
     errorElement.classList.add(this._errorClass);
   };
 
-
   // Метод проверки валидности инпутов
   _checkInputValidity (input, errorElement) {
     if (input.validity.valid) {
@@ -49,7 +49,6 @@ class FormValidator {
     });
   };
 
-
   // Метод переключения состояния кнопки в зависимости от валидности формы
   _toggleButtonValidity(formInputsArray, saveButton) {
     if (this._checkFormValidity(formInputsArray)) {
@@ -61,7 +60,6 @@ class FormValidator {
     };
   };
 
-  // ПОДУМАТЬ НАД ЭТИМ И ДОБАВВИТЬ МЕТОД СЛУШАТЕЛЕЙ В ВАЛИДАЦИЮ
   // Метод обработки формы
   _setSubmitListener(form) {
     form.addEventListener('submit', evt => {
@@ -70,13 +68,14 @@ class FormValidator {
     });
   }
 
+  // Метод установки слушателей событий
   _setEventListeners(input, errorElement, formInputsArray, saveButton) {
     input.addEventListener('input', () => {
       this._checkInputValidity(input, errorElement);
       this._toggleButtonValidity(formInputsArray, saveButton);
     });
   }
-
+  // Метод включения валидации
   enableValidation() {
     const form = document.querySelector(this._form);
     const saveButton = form.querySelector(this._submitButtonSelector);
@@ -92,9 +91,5 @@ class FormValidator {
   }
 };
 
-const validateFormEditProfile = new FormValidator(validationConfig, '.popup__form[name="edit-profile"]');
-const validateFormAddCard = new FormValidator(validationConfig, '.popup__form[name="add-card"]');
-
-
-
+export { validationConfig, FormValidator };
 

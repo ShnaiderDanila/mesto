@@ -15,51 +15,60 @@ const galleryList = gallery.querySelector('.gallery__list');
 // Переменные Popup
 // PopupEdit
 const popupEdit = document.querySelector('.popup-edit');
-const popupEditForm = popupEdit.querySelector('.popup__form');
+const popupEditForm = document.forms['edit-profile'];
 const popupEditNameInput = popupEdit.querySelector('.popup__input[name="name"]');
 const popupEditJobInput = popupEdit.querySelector('.popup__input[name="job"]');
 // PopupAdd
 const popupAdd = document.querySelector('.popup-add');
-const popupAddForm = popupAdd.querySelector('.popup__form');
+const popupAddForm = document.forms['add-card'];
 const popupAddPlaceNameInput = popupAdd.querySelector('.popup__input[name="place-name"]');
 const popupAddLinkInput = popupAdd.querySelector('.popup__input[name="link"]');
-
-
+// PopupPicture
 const popupPicture = document.querySelector('.popup-picture');
 const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
 const popupBigImage = popupPicture.querySelector('.popup__big-image');
 
-// PopupFormObj
-const validateFormEditProfile = new FormValidator(validationConfig, '.popup__form[name="edit-profile"]');
-const validateFormAddCard = new FormValidator(validationConfig, '.popup__form[name="add-card"]');
+// Объект, где будут храниться все формы со страницы
+const formValidators = {}
 
+// Функция включения валидации на каждой форме
+function enableValidation(config) {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((form) => {
+    const validator = new FormValidator(config, form)
+// получаем данные из атрибута `name` у формы
+    const formName = form.getAttribute('name')
+// в объект записываем - имя текущей формы: объект с методами валидации
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
+enableValidation(validationConfig);
 
 // Функция закрытия попапа
-function closePopup (popup) {
+function closePopup(popup) {
   popup.classList.remove('popup_is-opened');
   document.removeEventListener('keydown', closePopupEscKey);
 };
 
 // Функция открытия попапа
-function openPopup (popup) {
+function openPopup(popup) {
   popup.classList.add('popup_is-opened');
   document.addEventListener('keydown', closePopupEscKey);
 };
 
 // Функция закрытия попапа кликом на оверлей
-function closePopupOverlay (evt) {
+function closePopupOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    closePopup(openedPopup);
+    closePopup(evt.target);
   };
 }
 
 // Функция закрытия попапа нажатием клавиши Esc
-function closePopupEscKey (evt) {
+function closePopupEscKey(evt) {
   if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    closePopup(openedPopup);
+    closePopup(evt.target);
   };
 }
 
@@ -70,6 +79,7 @@ function addEventsClosePopup () {
     // Функция закрытия попапа кликом на крестик
     const popupButtonClose = popup.querySelector('.popup__button-close')
     popupButtonClose.addEventListener('click', () => closePopup(popup));
+    // Функция закрытия попапа кликом на оверлей
     popup.addEventListener('click', closePopupOverlay);
 });
 }
@@ -84,20 +94,25 @@ function handleCardImageClick(name, link) {
   openPopup(popupPicture);
 }
 
+// Функция создания карточки
+function createCard(item) {
+  const cardItem = new Card(item, '#card-template', handleCardImageClick);
+  return cardItem.generateCard();
+}
+
 // Добавление начальных карт с данными из массива initialCards;
 initialCards.forEach(item => {
-  const cardItem = new Card(item, '#card-template', handleCardImageClick);
-  const card = cardItem.generateCard();
+  const card = createCard(item);
   galleryList.append(card);
 });
 
 // Функции PopupEdit
 // Функция активациии PopupEdit
-function enableEditPopup (popup) {
+function enableEditPopup(popup) {
   popupEditNameInput.value = profileTitle.textContent;
   popupEditJobInput.value = profileSubtitle.textContent;
   openPopup(popup);
-  validateFormEditProfile.enableValidation();
+  formValidators['edit-profile'].resetValidation();
 };
 
 // Обработка PopupEdit
@@ -113,19 +128,18 @@ popupEditForm.addEventListener('submit', handleEditFormSubmit);
 
 // Функции PopupAdd
 // Функция активациии PopupAdd
-function enableAddPopup (popup) {
+function enableAddPopup(popup) {
   openPopup(popup);
-  validateFormAddCard.enableValidation();
+  formValidators['add-card'].resetValidation();
 }
 
-function handleAddFormSubmit () {
+function handleAddFormSubmit() {
   // Добавление новой карточки по классу Card
   const popupAddObj = {
     name:  popupAddPlaceNameInput.value,
     link:  popupAddLinkInput.value,
   };
-  const cardItem = new Card(popupAddObj, '#card-template');
-  const card = cardItem.generateCard();
+  const card = createCard(popupAddObj);
   galleryList.prepend(card);
   closePopup(popupAdd);
 };

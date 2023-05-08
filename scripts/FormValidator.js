@@ -12,11 +12,12 @@ const validationConfig = {
 class FormValidator {
   constructor(config, form) {
     this._form = form;
-    this._inputSelector = config.inputSelector;
-    this._submitButtonSelector = config.submitButtonSelector;
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
+    this._submitButton = this._form.querySelector(config.submitButtonSelector);
+    this._inputList = this._form.querySelectorAll(config.inputSelector);
+    this._inputListArray = Array.from(this._inputList);
   }
 
   // Метод скрытия ошибки
@@ -27,14 +28,14 @@ class FormValidator {
   }
 
   // Метод отображения ошибки
-  _showError (input, errorElement) {
+  _showError(input, errorElement) {
     input.classList.add(this._inputErrorClass);
     errorElement.textContent = input.validationMessage;
     errorElement.classList.add(this._errorClass);
   };
 
   // Метод проверки валидности инпутов
-  _checkInputValidity (input, errorElement) {
+  _checkInputValidity(input, errorElement) {
     if (input.validity.valid) {
       this._hideError(input, errorElement);
     } else {
@@ -43,50 +44,54 @@ class FormValidator {
   };
 
   // Метод проверки валидности формы
-  _checkFormValidity (formInputsArray) {
-    return formInputsArray.every((input) => {
+  _checkFormValidity() {
+    return this._inputListArray.every((input) => {
       return input.validity.valid;
     });
   };
 
   // Метод переключения состояния кнопки в зависимости от валидности формы
-  _toggleButtonValidity(formInputsArray, saveButton) {
-    if (this._checkFormValidity(formInputsArray)) {
-      saveButton.removeAttribute('disabled');
-      saveButton.classList.remove(this._inactiveButtonClass);
+  _toggleButtonValidity() {
+    if (this._checkFormValidity()) {
+      this._submitButton.removeAttribute('disabled');
+      this._submitButton.classList.remove(this._inactiveButtonClass);
     } else {
-      saveButton.setAttribute('disabled', '');
-      saveButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.setAttribute('disabled', '');
+      this._submitButton.classList.add(this._inactiveButtonClass);
     };
   };
 
   // Метод обработки формы
-  _setSubmitListener(form) {
-    form.addEventListener('submit', evt => {
+  _setSubmitListener() {
+    this._form.addEventListener('submit', evt => {
       evt.preventDefault();
-      form.reset();
+      this._form.reset();
+    });
+  };
+
+  // Метод установки слушателей событий
+  _setEventListeners(input, errorElement) {
+    input.addEventListener('input', () => {
+      this._checkInputValidity(input, errorElement);
+      this._toggleButtonValidity();
     });
   }
 
-  // Метод установки слушателей событий
-  _setEventListeners(input, errorElement, formInputsArray, saveButton) {
-    input.addEventListener('input', () => {
-      this._checkInputValidity(input, errorElement);
-      this._toggleButtonValidity(formInputsArray, saveButton);
+  // Метод очистки ошибок и управления кнопкой
+  resetValidation() {
+    this._toggleButtonValidity();
+    this._inputList.forEach(input => {
+      const errorElement = this._form.querySelector(`#error-${input.id}`);
+      this._hideError(input, errorElement);
     });
-  }
+  };
+
   // Метод включения валидации
   enableValidation() {
-    const form = document.querySelector(this._form);
-    const saveButton = form.querySelector(this._submitButtonSelector);
-    const formInputs = form.querySelectorAll(this._inputSelector);
-    const formInputsArray = Array.from(formInputs);
-    this._setSubmitListener(form);
-    this._toggleButtonValidity(formInputsArray, saveButton);
-    formInputsArray.forEach(input => {
-      const errorElement = form.querySelector(`#error-${input.id}`);
-      this._hideError(input, errorElement);
-      this._setEventListeners(input, errorElement, formInputsArray, saveButton);
+    this._setSubmitListener();
+    this._inputListArray.forEach(input => {
+      const errorElement = this._form.querySelector(`#error-${input.id}`);
+      this._setEventListeners(input, errorElement);
     });
   }
 };

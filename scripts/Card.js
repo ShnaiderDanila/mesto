@@ -1,5 +1,3 @@
-import { openPopup } from "./index.js";
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -29,10 +27,11 @@ const initialCards = [
 
 // Создание класса Card
 class Card {
-  constructor(data, cardTemplate) {
+  constructor(data, cardTemplate, handleCardImageClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplate = cardTemplate;
+    this._handleCardImageClick = handleCardImageClick;
   }
 
   // Метод получения шаблона карты
@@ -48,15 +47,17 @@ class Card {
   // Метод генерации карты
   generateCard() {
     this._card = this._getTemplate();
+    this._cardImage = this._card.querySelector('.card__image');
+    this._cardTitle = this._card.querySelector('.card__title');
     this._setEventListeners();
-    this._card.querySelector('.card__image').src = this._link;
-    this._card.querySelector('.card__image').alt = this._name;
-    this._card.querySelector('.card__title').textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
     return this._card;
   }
 
   // Метод лайка карточки
-  _likeCard(evt) {
+  _toggleLike(evt) {
     evt.target.classList.toggle('card__button_is-active');
   }
 
@@ -65,21 +66,10 @@ class Card {
     this._card.remove();
   }
 
-  // Метод открытия попапа с картинкой
-  _openPopupImage() {
-    const popupPicture = document.querySelector('.popup-picture');
-    const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
-    const popupBigImage = popupPicture.querySelector('.popup__big-image');
-    openPopup(popupPicture);
-    popupBigImage.src = this._card.querySelector('.card__image').src;
-    popupBigImage.alt = this._card.querySelector('.card__image').alt;
-    popupFigcaption.textContent = this._card.querySelector('.card__title').textContent;
-  }
-
   // Метод добавления слушателей событий
   _setEventListeners() {
-    this._card.querySelector('.card__image').addEventListener('click', () => {
-      this._openPopupImage();
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardImageClick(this._name, this._link);
     });
 
     this._card.querySelector('.card__delete-button').addEventListener('click', () => {
@@ -87,7 +77,7 @@ class Card {
     });
 
     this._card.querySelector('.card__button').addEventListener('click', (evt) => {
-      this._likeCard(evt);
+      this._toggleLike(evt);
     });
   }
 }

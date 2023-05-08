@@ -24,9 +24,16 @@ const popupAddForm = popupAdd.querySelector('.popup__form');
 const popupAddPlaceNameInput = popupAdd.querySelector('.popup__input[name="place-name"]');
 const popupAddLinkInput = popupAdd.querySelector('.popup__input[name="link"]');
 
+
+const popupPicture = document.querySelector('.popup-picture');
+const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
+const popupBigImage = popupPicture.querySelector('.popup__big-image');
+
 // PopupFormObj
 const validateFormEditProfile = new FormValidator(validationConfig, '.popup__form[name="edit-profile"]');
 const validateFormAddCard = new FormValidator(validationConfig, '.popup__form[name="add-card"]');
+
+
 
 // Функция закрытия попапа
 function closePopup (popup) {
@@ -69,9 +76,17 @@ function addEventsClosePopup () {
 
 addEventsClosePopup();
 
+// Функкция обработчик клика по картинке карты
+function handleCardImageClick(name, link) {
+  popupBigImage.src = link;
+  popupBigImage.alt = name;
+  popupFigcaption.textContent = name;
+  openPopup(popupPicture);
+}
+
 // Добавление начальных карт с данными из массива initialCards;
 initialCards.forEach(item => {
-  const cardItem = new Card(item, '#card-template');
+  const cardItem = new Card(item, '#card-template', handleCardImageClick);
   const card = cardItem.generateCard();
   galleryList.append(card);
 });
@@ -119,6 +134,5 @@ function handleAddFormSubmit () {
 profileButtonAdd.addEventListener('click', () => enableAddPopup(popupAdd));
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
-export { openPopup };
 
 

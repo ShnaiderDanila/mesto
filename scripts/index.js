@@ -68,7 +68,8 @@ function closePopupOverlay(evt) {
 // Функция закрытия попапа нажатием клавиши Esc
 function closePopupEscKey(evt) {
   if (evt.key === 'Escape') {
-    closePopup(evt.target);
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closePopup(openedPopup);
   };
 }
 
@@ -80,7 +81,7 @@ function addEventsClosePopup () {
     const popupButtonClose = popup.querySelector('.popup__button-close')
     popupButtonClose.addEventListener('click', () => closePopup(popup));
     // Функция закрытия попапа кликом на оверлей
-    popup.addEventListener('click', closePopupOverlay);
+    popup.addEventListener('mousedown', closePopupOverlay);
 });
 }
 
@@ -108,10 +109,10 @@ initialCards.forEach(item => {
 
 // Функции PopupEdit
 // Функция активациии PopupEdit
-function enableEditPopup(popup) {
+function openProfilePopup() {
   popupEditNameInput.value = profileTitle.textContent;
   popupEditJobInput.value = profileSubtitle.textContent;
-  openPopup(popup);
+  openPopup(popupEdit);
   formValidators['edit-profile'].resetValidation();
 };
 
@@ -123,13 +124,14 @@ function handleEditFormSubmit() {
 };
 
 // Слушатели событий PopupEdit
-profileButtonEdit.addEventListener('click', () => enableEditPopup(popupEdit));
+profileButtonEdit.addEventListener('click', openProfilePopup);
 popupEditForm.addEventListener('submit', handleEditFormSubmit);
 
 // Функции PopupAdd
 // Функция активациии PopupAdd
-function enableAddPopup(popup) {
-  openPopup(popup);
+function openAddPopup() {
+  openPopup(popupAdd);
+  popupAddForm.reset();
   formValidators['add-card'].resetValidation();
 }
 
@@ -145,7 +147,7 @@ function handleAddFormSubmit() {
 };
 
 // Слушатели событий PopupAdd
-profileButtonAdd.addEventListener('click', () => enableAddPopup(popupAdd));
+profileButtonAdd.addEventListener('click', openAddPopup);
 popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
 

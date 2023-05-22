@@ -1,5 +1,6 @@
 import { validationConfig, FormValidator } from './FormValidator.js';
 import { initialCards, Card } from './Card.js';
+import { Popup } from './Popup.js';
 
 // Переменные Profile
 const profile = document.querySelector('.profile');
@@ -46,46 +47,26 @@ function enableValidation(config) {
 
 enableValidation(validationConfig);
 
-// Функция закрытия попапа
-function closePopup(popup) {
-  popup.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', closePopupEscKey);
-};
-
-// Функция открытия попапа
-function openPopup(popup) {
-  popup.classList.add('popup_is-opened');
-  document.addEventListener('keydown', closePopupEscKey);
-};
-
-// Функция закрытия попапа кликом на оверлей
-function closePopupOverlay(evt) {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  };
+function openPopup(popupSelector) {
+  const popup = new Popup(popupSelector);
+  popup.open();
 }
 
-// Функция закрытия попапа нажатием клавиши Esc
-function closePopupEscKey(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    closePopup(openedPopup);
-  };
+function closePopup(popupSelector) {
+  const popup = new Popup(popupSelector);
+  popup.close();
 }
 
-// Функция добавления слушателей событий закрытия попапов
-function addEventsClosePopup () {
+// Функция добавления слушателей на попапы
+function addEventsPopup() {
   const popups = document.querySelectorAll('.popup');
   popups.forEach(popup => {
-    // Функция закрытия попапа кликом на крестик
-    const popupButtonClose = popup.querySelector('.popup__button-close')
-    popupButtonClose.addEventListener('click', () => closePopup(popup));
-    // Функция закрытия попапа кликом на оверлей
-    popup.addEventListener('mousedown', closePopupOverlay);
+    const popupItem = new Popup(popup);
+    popupItem.setEventListeners();
 });
 }
 
-addEventsClosePopup();
+addEventsPopup();
 
 // Функкция обработчик клика по картинке карты
 function handleCardImageClick(name, link) {

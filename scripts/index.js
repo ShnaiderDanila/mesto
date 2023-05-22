@@ -1,6 +1,7 @@
 import { validationConfig, FormValidator } from './FormValidator.js';
 import { initialCards, Card } from './Card.js';
 import { Popup } from './Popup.js';
+import { PopupWithImage } from './PopupWithImage.js';
 
 // Переменные Profile
 const profile = document.querySelector('.profile');
@@ -26,8 +27,6 @@ const popupAddPlaceNameInput = popupAdd.querySelector('.popup__input[name="place
 const popupAddLinkInput = popupAdd.querySelector('.popup__input[name="link"]');
 // PopupPicture
 const popupPicture = document.querySelector('.popup-picture');
-const popupFigcaption = popupPicture.querySelector('.popup__figcaption');
-const popupBigImage = popupPicture.querySelector('.popup__big-image');
 
 // Объект, где будут храниться все формы со страницы
 const formValidators = {}
@@ -70,10 +69,8 @@ addEventsPopup();
 
 // Функкция обработчик клика по картинке карты
 function handleCardImageClick(name, link) {
-  popupBigImage.src = link;
-  popupBigImage.alt = name;
-  popupFigcaption.textContent = name;
-  openPopup(popupPicture);
+  const popupWithImage = new PopupWithImage(popupPicture, name, link);
+  popupWithImage.open();
 }
 
 // Функция создания карточки

@@ -69,14 +69,14 @@ popupAddWithForm.setEventListeners();
 
 
 // Функкция обработчик клика по картинке карты
-function handleCardImageClick(name, link) {
+function handleCardClick(name, link) {
   const popupWithImage = new PopupWithImage(popupPicture, name, link);
   popupWithImage.open();
 }
 
 // Функция создания карточки
 function createCard(item) {
-  const cardItem = new Card(item, '#card-template', handleCardImageClick);
+  const cardItem = new Card(item, '#card-template', handleCardClick);
   return cardItem.generateCard();
 }
 

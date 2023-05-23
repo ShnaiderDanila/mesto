@@ -27,11 +27,11 @@ const initialCards = [
 
 // Создание класса Card
 class Card {
-  constructor(data, cardTemplate, handleCardImageClick) {
+  constructor(data, cardTemplate, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplate = cardTemplate;
-    this._handleCardImageClick = handleCardImageClick;
+    this._handleCardClick = handleCardClick;
   }
 
   // Метод получения шаблона карты
@@ -69,7 +69,7 @@ class Card {
   // Метод добавления слушателей событий
   _setEventListeners() {
     this._cardImage.addEventListener('click', () => {
-      this._handleCardImageClick(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     });
 
     this._card.querySelector('.card__delete-button').addEventListener('click', () => {

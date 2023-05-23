@@ -2,6 +2,7 @@ import { validationConfig, FormValidator } from './FormValidator.js';
 import { initialCards, Card } from './Card.js';
 import { Popup } from './Popup.js';
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 // Переменные Profile
 const profile = document.querySelector('.profile');
@@ -56,16 +57,16 @@ function closePopup(popupSelector) {
   popup.close();
 }
 
-// Функция добавления слушателей на попапы
-function addEventsPopup() {
-  const popups = document.querySelectorAll('.popup');
-  popups.forEach(popup => {
-    const popupItem = new Popup(popup);
-    popupItem.setEventListeners();
-});
-}
+const popupWithImage = new PopupWithImage(popupPicture);
+popupWithImage.setEventListeners();
 
-addEventsPopup();
+const popupProfileWithForm = new PopupWithForm(popupEdit, handleEditFormSubmit);
+popupProfileWithForm.setEventListeners();
+
+const popupAddWithForm = new PopupWithForm(popupAdd, handleAddFormSubmit);
+popupAddWithForm.setEventListeners();
+
+
 
 // Функкция обработчик клика по картинке карты
 function handleCardImageClick(name, link) {
@@ -103,7 +104,6 @@ function handleEditFormSubmit() {
 
 // Слушатели событий PopupEdit
 profileButtonEdit.addEventListener('click', openProfilePopup);
-popupEditForm.addEventListener('submit', handleEditFormSubmit);
 
 // Функции PopupAdd
 // Функция активациии PopupAdd
@@ -126,7 +126,6 @@ function handleAddFormSubmit() {
 
 // Слушатели событий PopupAdd
 profileButtonAdd.addEventListener('click', openAddPopup);
-popupAddForm.addEventListener('submit', handleAddFormSubmit);
 
 
 

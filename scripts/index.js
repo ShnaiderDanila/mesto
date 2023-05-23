@@ -3,6 +3,7 @@ import { initialCards, Card } from './Card.js';
 import { Popup } from './Popup.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
+import { Section } from './Section.js';
 
 // Переменные Profile
 const profile = document.querySelector('.profile');
@@ -47,6 +48,7 @@ function enableValidation(config) {
 
 enableValidation(validationConfig);
 
+// Функции открытия закрытия попапа
 function openPopup(popupSelector) {
   const popup = new Popup(popupSelector);
   popup.open();
@@ -57,6 +59,8 @@ function closePopup(popupSelector) {
   popup.close();
 }
 
+
+// Функции добавления слушателей на попапы
 const popupWithImage = new PopupWithImage(popupPicture);
 popupWithImage.setEventListeners();
 
@@ -74,17 +78,19 @@ function handleCardClick(name, link) {
   popupWithImage.open();
 }
 
-// Функция создания карточки
-function createCard(item) {
-  const cardItem = new Card(item, '#card-template', handleCardClick);
-  return cardItem.generateCard();
-}
+// Класс для добавления начальных карточек на страницу
+const cardList = new Section ({
+  items: initialCards,
+  renderer: (item) => {
+      const cardItem = new Card(item, '#card-template', handleCardClick);
+      const card = cardItem.generateCard();
+      cardList.addItem(card);
+  },
 
-// Добавление начальных карт с данными из массива initialCards;
-initialCards.forEach(item => {
-  const card = createCard(item);
-  galleryList.append(card);
-});
+}, galleryList)
+
+cardList.renderItems();
+
 
 // Функции PopupEdit
 // Функция активациии PopupEdit

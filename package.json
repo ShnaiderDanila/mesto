@@ -1,0 +1,23 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "URL: https://shnd3r.github.io/mesto/\r ## Description\r Mesto - project written in vanilla HTML5, CSS3 and Vanila JS.\r Mesto is an interactive page for posting photos.\r ## Features\r - Adaptive and responsive page from 320px to 1280px;\r - Interactive popup-menu.\r ## Tech stack\r In the project used:\r - CSS media quaries;\r - CSS Flexbox and GridLayout;\r - BEM methodology.\r ## Plans to refine the project\r Add vendor prefixes to CSS styles, with Can I Use source.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shnd3r/mesto.git"
+  },
+  "author": "Shnayder Danila",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shnd3r/mesto/issues"
+  },
+  "homepage": "https://github.com/Shnd3r/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.83.1",
+    "webpack-cli": "^5.1.1"
+  }
+}

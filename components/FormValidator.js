@@ -1,14 +1,3 @@
-// Функции настройки валидации формы
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-save',
-  inactiveButtonClass: 'popup__button-save_invalid',
-  inputErrorClass: 'popup__input_invalid',
-  errorClass: 'popup__input-error_active'
-};
-
-// Создание класса FormValidator
 class FormValidator {
   constructor(config, form) {
     this._form = form;
@@ -87,5 +76,4 @@ class FormValidator {
   }
 };
 
-export { validationConfig, FormValidator };
-
+export { FormValidator };

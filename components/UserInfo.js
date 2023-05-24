@@ -1,11 +1,10 @@
-// Создание и экспорт класса UserInfo
-export class UserInfo {
+class UserInfo {
   constructor({usernameSelector, descriptionSelector}) {
     this._username = document.querySelector(usernameSelector);
     this._description = document.querySelector(descriptionSelector);
   }
 
-// Метод возращает объект с данными пользователя
+// Метод возвращения объекта с данными пользователя
   getUserInfo() {
     return {
       username: this._username.textContent,
@@ -19,3 +18,5 @@ export class UserInfo {
     this._description.textContent = newDescription;
   }
 }
+
+export { UserInfo }

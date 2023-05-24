@@ -8,6 +8,7 @@ class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
   }
 
+  // Метод получения объекта из инпутов формы
   _getInputValues() {
     const formInputs = {};
     this._inputList.forEach(input => {
@@ -16,11 +17,13 @@ class PopupWithForm extends Popup {
     return formInputs;
   }
 
+  // Расширенный метод закрытия попапа с формой
   close() {
     super.close();
     this._popupForm.reset();
   }
 
+  // Расширенный метод установки слушателей событий на попап с формой
   setEventListeners() {
     super.setEventListeners();
     this._popupForm.addEventListener('submit', (evt) => {
@@ -29,7 +32,6 @@ class PopupWithForm extends Popup {
       this.close();
     });
   }
-
 }
 
-export { PopupWithForm };
+export { PopupWithForm }

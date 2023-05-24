@@ -61,13 +61,6 @@ class FormValidator {
     };
   };
 
-  // Метод обработки формы
-  _setSubmitListener() {
-    this._form.addEventListener('submit', evt => {
-      evt.preventDefault();
-    });
-  };
-
   // Метод установки слушателей событий
   _setEventListeners(input, errorElement) {
     input.addEventListener('input', () => {
@@ -87,7 +80,6 @@ class FormValidator {
 
   // Метод включения валидации
   enableValidation() {
-    this._setSubmitListener();
     this._inputListArray.forEach(input => {
       const errorElement = this._form.querySelector(`#error-${input.id}`);
       this._setEventListeners(input, errorElement);

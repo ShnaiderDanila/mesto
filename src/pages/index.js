@@ -1,3 +1,6 @@
+// Импорт главного файла стилей
+import './index.css';
+
 // Импорт классов
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';

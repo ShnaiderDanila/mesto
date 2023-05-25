@@ -39,30 +39,28 @@ enableValidation(validationConfig);
 
 // Функкция обработчик клика по картинке карты
 function handleCardClick(name, link) {
-  const popupPicture = new PopupWithImage('.popup-picture', name, link);
-  popupPicture.open();
+  popupPicture.open(name, link);
 }
 
 // Создание экземпляров классов
 // Экземпляр класса Section
-const cardList = new Section ({
-  items: initialCards,
+const card = new Section ({
   renderer: (item) => {
       const cardItem = new Card(item, '#card-template', handleCardClick);
       const cardElement = cardItem.generateCard();
-      cardList.addItem(cardElement);
+      card.addItem(cardElement);
   },
 }, '.gallery__list')
 
 // Функция запуска рендер-функции класса Section (для добавления начальных карточек на страницу)
-cardList.renderItems();
+card.renderItems(initialCards.reverse());
 
 // Экземпляр класса PopupWithImage (для попапа с картинкой)
 const popupPicture = new PopupWithImage('.popup-picture');
 
 // // Экземпляры класса PopupWithForm (для попапов с формой)
 const popupProfile = new PopupWithForm('.popup-profile', handleProfileFormSubmit);
-const popupAdd = new PopupWithForm('.popup-add', handleAddFormSubmit);
+const popupAddCard = new PopupWithForm('.popup-add', handleAddFormSubmit);
 
 // Экземлпяр класса UserInfo (для хранения информации о пользователе)
 const profileInfo = new UserInfo({
@@ -78,34 +76,25 @@ function handleProfileFormSubmit({name, job}) {
   })
 };
 
-// Функция обработчик самбита PopupAdd
+// Функция обработчик самбита PopupAddCard
 function handleAddFormSubmit({place, link}) {
-  // Массив данных для новой карточки
-    const popupAddObj = [{
-      name: place,
-      link: link
-    }];
+  const popupAddCardObj= [{
+    name: place,
+    link: link
+  }];
   // Добавление новой карточки по классу Section
-    const card = new Section({
-      items: popupAddObj,
-      renderer: (item) => {
-        const cardItem = new Card(item, '#card-template', handleCardClick);
-        const cardElement = cardItem.generateCard();
-        document.querySelector('.gallery__list').prepend(cardElement);
-      }
-    }, '.gallery__list')
-    card.renderItems();
-  };
+  card.renderItems(popupAddCardObj);
+};
 
 // Добавление слушателей событий на все попапы
 popupPicture.setEventListeners();
 popupProfile.setEventListeners();
-popupAdd.setEventListeners();
+popupAddCard.setEventListeners();
 
 // Слушатель события активации PopupProfile
 profileButtonEdit.addEventListener('click', openProfilePopup);
 
-// Слушатель события активации PopupAdd
+// Слушатель события активации PopupAddCard
 profileButtonAdd.addEventListener('click', openAddPopup);
 
 // Функция активациии PopupProfile
@@ -117,9 +106,9 @@ function openProfilePopup() {
   formValidators['edit-profile'].resetValidation();
 };
 
-// Функция активациии PopupAdd
+// Функция активациии PopupAddCard
 function openAddPopup() {
-  popupAdd.close();
-  popupAdd.open();
+  popupAddCard.close();
+  popupAddCard.open();
   formValidators['add-card'].resetValidation();
 }

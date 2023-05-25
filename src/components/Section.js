@@ -6,15 +6,15 @@ class Section {
   }
 
   // Метод активация рендер-функции на каждом элементе массива
-  renderItems() {
-    this._items.forEach(item => {
+  renderItems(items) {
+    items.forEach(item => {
       this._renderer(item);
     });
   }
 
   // Метод добавления элемента в контейнер
   addItem(element) {
-    this._container.append(element);
+    this._container.prepend(element);
   }
 }
 

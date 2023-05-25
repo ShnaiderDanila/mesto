@@ -2,6 +2,7 @@ class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupButtonClose = this._popup.querySelector('.popup__button-close');
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   // Метод открытия попапа
@@ -19,8 +20,7 @@ class Popup {
   // Приватный метод закрытия попапа клавишей ESC
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      const openedPopup = document.querySelector('.popup_is-opened');
-      openedPopup.classList.remove('popup_is-opened');
+      this.close();
     };
   }
 

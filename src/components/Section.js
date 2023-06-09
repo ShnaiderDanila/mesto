@@ -1,14 +1,13 @@
 class Section {
-  constructor({items, renderer}, containerSelector) {
-    this._items = items;
+  constructor({renderer}, containerSelector) {
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
   }
 
   // Метод активация рендер-функции на каждом элементе массива
-  renderItems(items) {
+  renderItems(items, userInfo) {
     items.forEach(item => {
-      this._renderer(item);
+      this._renderer(item, userInfo);
     });
   }
 

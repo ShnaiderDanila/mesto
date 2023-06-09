@@ -6,6 +6,8 @@ class PopupWithForm extends Popup {
     this._popupForm = this._popup.querySelector('.popup__form');
     this._inputList = Array.from(this._popupForm.querySelectorAll('.popup__input'));
     this._handleFormSubmit = handleFormSubmit;
+    this._saveButton = this._popup.querySelector('.popup__button-save');
+    this._saveButtonText = this._saveButton.textContent
   }
 
   // Метод получения объекта из инпутов формы
@@ -21,6 +23,15 @@ class PopupWithForm extends Popup {
   close() {
     super.close();
     this._popupForm.reset();
+  }
+
+  // Метод добавления нового текста кнопке самбита, в начале загрузки данных
+  renderLoadingStart() {
+    this._saveButton.textContent = "Сохранение..."
+  }
+  // Метод добавления начального текста кнопке самбита, в конце загрузки данных
+  renderLoadingEnd() {
+    this._saveButton.textContent = this._saveButtonText;
   }
 
   // Расширенный метод установки слушателей событий на попап с формой

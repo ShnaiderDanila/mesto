@@ -16,9 +16,6 @@ import {
   validationConfig,
   profileButtonEdit,
   profileButtonAdd,
-  profileAvatar,
-  profileTitle,
-  profileSubtitle,
   popupProfileNameInput,
   popupProfileJobInput,
   popupProfileAvatarButton
@@ -66,7 +63,7 @@ function createCard(item, userInfo) {
     popupConfirmation.setDeleteConfirm(() => {
       api.deleteCard(item._id)
       .then(() => {
-        cardItem.deleteCard();
+        cardElement.deleteCard();
         popupConfirmation.close();
       })
       .catch((err) => {
@@ -79,8 +76,8 @@ function createCard(item, userInfo) {
   function handleLikeSet() {
     api.setLike(item._id)
     .then((item) => {
-      cardItem.addLike();
-      cardItem.changeLikeCounter(item);
+      cardElement.addLike();
+      cardElement.changeLikeCounter(item);
     })
     .catch((err) => {
       console.log(err);
@@ -91,8 +88,8 @@ function createCard(item, userInfo) {
   function handleLikeDelete() {
     api.removeLike(item._id)
     .then((item) => {
-      cardItem.deleteLike();
-      cardItem.changeLikeCounter(item);
+      cardElement.deleteLike();
+      cardElement.changeLikeCounter(item);
     })
     .catch((err) => {
       console.log(err);
@@ -105,21 +102,18 @@ function createCard(item, userInfo) {
 }
 
 // Экземпляр класса Section
-const cardSection = new Section ({
+const cardSection = new Section({
   renderer: (item, userInfo) => {
-    // Создание карточки и добавление её в контейнер gallery__list
     const cardElement = createCard(item, userInfo);
     cardSection.addItem(cardElement);
-  },
-}, '.gallery__list')
+  }
+}, '.gallery__list');
 
 // Функция запуска рендер-функции класса Section (для добавления начальных карточек на страницу)
 api.getAppInfo()
 .then(([ initialCards, userInfo ]) => {
   cardSection.renderItems(initialCards.reverse(), userInfo);
-  profileTitle.textContent = userInfo.name;
-  profileSubtitle.textContent = userInfo.about;
-  profileAvatar.src = userInfo.avatar;
+  profileInfo.setUserInfo(userInfo);
 })
 .catch((err) => {
   console.log(err);
@@ -138,8 +132,9 @@ const popupConfirmation = new PopupWithConfirmation('.popup-alert');
 
 // Экземлпяр класса UserInfo (для хранения информации о пользователе)
 const profileInfo = new UserInfo({
-  usernameSelector: '.profile__title',
-  descriptionSelector: '.profile__subtitle'
+  name: '.profile__title',
+  about: '.profile__subtitle',
+  avatar: '.profile__avatar-image'
 });
 
 // Функция обработчик самбита popupProfile
@@ -148,8 +143,8 @@ function handleProfileFormSubmit({name, job}) {
   api.editProfile(name, job)
   .then(() => {
     profileInfo.setUserInfo({
-      newUsername: name,
-      newDescription: job
+      username: name,
+      about: job
     })
     popupProfile.close();
   })
@@ -224,9 +219,9 @@ popupProfileAvatarButton.addEventListener('click', openAvatarPopup);
 
 // Функция активациии PopupProfile
 function openProfilePopup() {
-  const {username, description} = profileInfo.getUserInfo();
-  popupProfileNameInput.value = username;
-  popupProfileJobInput.value = description;
+  const {name, about} = profileInfo.getUserInfo();
+  popupProfileNameInput.value = name;
+  popupProfileJobInput.value = about;
   popupProfile.open();
   formValidators['edit-profile'].resetValidation();
 };

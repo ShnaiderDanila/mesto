@@ -12,9 +12,6 @@ const validationConfig = {
 const profileButtonEdit = document.querySelector('.profile__button-edit');
 const profileButtonAdd = document.querySelector('.profile__button-add');
 const popupProfileAvatarButton = document.querySelector('.profile__avatar-button');
-const profileAvatar = document.querySelector('.profile__avatar-image');
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
 
 // Переменные PopupProfile
 const popupProfileNameInput = document.querySelector('.popup__input[name="name"]');
@@ -24,9 +21,6 @@ export {
   validationConfig,
   profileButtonEdit,
   profileButtonAdd,
-  profileAvatar,
-  profileTitle,
-  profileSubtitle,
   popupProfileNameInput,
   popupProfileJobInput,
   popupProfileAvatarButton

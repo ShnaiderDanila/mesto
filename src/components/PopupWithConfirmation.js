@@ -6,6 +6,7 @@ class PopupWithConfirmation extends Popup {
     this._buttonConfirm = this._popup.querySelector('.popup__button-save');
   }
 
+  // Метод получения логики подтверждения удаления карточки
   setDeleteConfirm(callbackFunction) {
     this._handleDeleteConfirm = callbackFunction;
   }

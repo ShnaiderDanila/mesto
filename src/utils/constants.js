@@ -15,13 +15,13 @@ const popupProfileAvatarButton = document.querySelector('.profile__avatar-button
 
 // Переменные PopupProfile
 const popupProfileNameInput = document.querySelector('.popup__input[name="name"]');
-const popupProfileJobInput = document.querySelector('.popup__input[name="job"]');
+const popupProfileAboutInput = document.querySelector('.popup__input[name="about"]');
 
 export {
   validationConfig,
   profileButtonEdit,
   profileButtonAdd,
   popupProfileNameInput,
-  popupProfileJobInput,
+  popupProfileAboutInput,
   popupProfileAvatarButton
 }

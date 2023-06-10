@@ -1,9 +1,9 @@
 class UserInfo {
-  constructor({name, about, avatar, _id}) {
+  constructor({name, about, avatar}) {
     this._name = document.querySelector(name);
     this._about = document.querySelector(about);
     this._avatar = document.querySelector(avatar);
-    this._userId = _id;
+    this._id = id;
   }
 
 // Метод возвращения объекта с данными пользователя
@@ -11,16 +11,18 @@ class UserInfo {
     return {
       name: this._name.textContent,
       about: this._about.textContent,
-      userId: this._userId
     }
   }
 
 // Метод принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo({name, about, avatar, _id}) {
+  setUserInfo({name, about}) {
     this._name.textContent = name;
     this._about.textContent = about;
+  }
+
+// Метод изменения аватара пользователя
+  setUserAvatar(avatar) {
     this._avatar.src = avatar;
-    this._userId = _id;
   }
 }
 

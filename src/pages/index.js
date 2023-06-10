@@ -17,7 +17,7 @@ import {
   profileButtonEdit,
   profileButtonAdd,
   popupProfileNameInput,
-  popupProfileJobInput,
+  popupProfileAboutInput,
   popupProfileAvatarButton
 } from '../utils/constants.js';
 
@@ -28,6 +28,9 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
+// Переменная для будущего id пользователя
+let userId = null;
 
 // Объект, где будут храниться все формы со страницы
 const formValidators = {}
@@ -48,8 +51,8 @@ function enableValidation(config) {
 enableValidation(validationConfig);
 
 // Функция создания карточки
-function createCard(item, userInfo) {
-  const cardElement = new Card
+function createCard(item, userId) {
+  const cardItem = new Card
   // Параметры класса Card
   (item, '#card-template',
    // Функкция обработчик клика по картинке карты
@@ -63,11 +66,11 @@ function createCard(item, userInfo) {
     popupConfirmation.setDeleteConfirm(() => {
       api.deleteCard(item._id)
       .then(() => {
-        cardElement.deleteCard();
+        cardItem.deleteCard();
         popupConfirmation.close();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(`Ошибка: ${err}`);
       })
     })
   },
@@ -76,11 +79,11 @@ function createCard(item, userInfo) {
   function handleLikeSet() {
     api.setLike(item._id)
     .then((item) => {
-      cardElement.addLike();
-      cardElement.changeLikeCounter(item);
+      cardItem.addLike();
+      cardItem.changeLikeCounter(item);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(`Ошибка: ${err}`);
     })
   },
 
@@ -88,23 +91,24 @@ function createCard(item, userInfo) {
   function handleLikeDelete() {
     api.removeLike(item._id)
     .then((item) => {
-      cardElement.deleteLike();
-      cardElement.changeLikeCounter(item);
+      cardItem.deleteLike();
+      cardItem.changeLikeCounter(item);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(`Ошибка: ${err}`);
     })
   },
   // Последний параметр id Пользователя
-  userInfo._id)
+  userId)
 
+  const cardElement = cardItem.generateCard();
   return cardElement
 }
 
 // Экземпляр класса Section
 const cardSection = new Section({
-  renderer: (item, userInfo) => {
-    const cardElement = createCard(item, userInfo);
+  renderer: (item, userId) => {
+    const cardElement = createCard(item, userId);
     cardSection.addItem(cardElement);
   }
 }, '.gallery__list');
@@ -112,11 +116,13 @@ const cardSection = new Section({
 // Функция запуска рендер-функции класса Section (для добавления начальных карточек на страницу)
 api.getAppInfo()
 .then(([ initialCards, userInfo ]) => {
-  cardSection.renderItems(initialCards.reverse(), userInfo);
+  userId = userInfo._id;
+  cardSection.renderItems(initialCards.reverse(), userId);
   profileInfo.setUserInfo(userInfo);
+  profileInfo.setUserAvatar(userInfo.avatar);
 })
 .catch((err) => {
-  console.log(err);
+  console.error(`Ошибка: ${err}`);
 });
 
 // Экземпляр класса PopupWithImage (для попапа с картинкой)
@@ -134,7 +140,7 @@ const popupConfirmation = new PopupWithConfirmation('.popup-alert');
 const profileInfo = new UserInfo({
   name: '.profile__title',
   about: '.profile__subtitle',
-  avatar: '.profile__avatar-image'
+  avatar: '.profile__avatar-image',
 });
 
 // Универсальная функция обработки сабмитов в связке с сервером
@@ -153,35 +159,25 @@ function handleSubmit(request, popupInstance, loadingText = "Сохранени�
 }
 
 // Функция обработчик самбита popupProfile
-function handleProfileFormSubmit({name, job}) {
+function handleProfileFormSubmit({name, about}) {
   function makeRequest() {
-    return api.editProfile(name, job)
+    return api.editProfile(name, about)
     .then(() => {
-      profileInfo.setUserInfo({
-        username: name,
-        about: job
-      })
+      profileInfo.setUserInfo({name, about});
     })
   }
-  handleSubmit(makeRequest, popupAddCard);
+  handleSubmit(makeRequest, popupProfile);
 };
-
 
 // Функция обработчик самбита popupAddCard
 function handleAddFormSubmit({place, link}) {
   function makeRequest() {
-    api.getUserInfo()
-    .then(userInfo => {
-      api.addCard(place, link)
-      .then(result => {
-        cardSection.renderItems([result], userInfo)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    return api.addCard(place, link)
+    .then(result => {
+      cardSection.renderItems([result], userId)
     })
   }
-  handleSubmit(makeRequest, popupProfile);
+  handleSubmit(makeRequest, popupAddCard);
 };
 
 // Функция обработчик самбита popupAvatar
@@ -190,9 +186,9 @@ function handleAvatarFormSubmit({avatar}) {
   img.src = avatar;
   img.onload = function() {
     function makeRequest() {
-      api.updateAvatar(avatar)
+      return api.updateAvatar(avatar)
       .then(() => {
-        profileAvatar.src = avatar;
+        profileInfo.setUserAvatar(avatar);
       })
     }
     handleSubmit(makeRequest, popupAvatar);
@@ -222,7 +218,7 @@ popupProfileAvatarButton.addEventListener('click', openAvatarPopup);
 function openProfilePopup() {
   const {name, about} = profileInfo.getUserInfo();
   popupProfileNameInput.value = name;
-  popupProfileJobInput.value = about;
+  popupProfileAboutInput.value = about;
   popupProfile.open();
   formValidators['edit-profile'].resetValidation();
 };

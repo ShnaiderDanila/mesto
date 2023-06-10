@@ -4,22 +4,23 @@ class Api {
     this._headers = options.headers;
   }
 
-// Метод обработки ответа от сервера
-_renderServerResponce(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
+// Универсальный метод обработки ответа от сервера
+  _renderServerResponce(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   }
-}
 
-_request(url, options) {
-  return fetch(`${this._baseUrl}/${url}`, options)
-  .then(res => {
-    return this._renderServerResponce(res)
-  })
-}
+// Универсальный метод запроса с проверкой ответа
+  _request(url, options) {
+    return fetch(`${this._baseUrl}/${url}`, options)
+    .then(res => {
+      return this._renderServerResponce(res)
+    })
+  }
 
 // Метод загрузки информации о пользователе с сервера
   getUserInfo() {
@@ -36,9 +37,9 @@ _request(url, options) {
   }
 
 // Метод получения общей информации (метода 1 и метода 2)
-getAppInfo() {
-  return Promise.all([this.getInitialCards(), this.getUserInfo()]);
-}
+  getAppInfo() {
+    return Promise.all([this.getInitialCards(), this.getUserInfo()]);
+  }
 
 // Метод редактирования профиля на сервере
   editProfile(name, about) {

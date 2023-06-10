@@ -26,7 +26,7 @@ class PopupWithForm extends Popup {
   }
 
   // Метод добавления нового текста кнопке самбита, в процессе загрузки
-  renderLoading(isLoading, loadingText) {
+  renderLoading(isLoading, loadingText = "Сохранение...") {
     if (isLoading) {
       this._saveButton.textContent = loadingText;
     } else {

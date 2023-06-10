@@ -143,25 +143,26 @@ const profileInfo = new UserInfo({
 
 // Функция обработчик самбита popupProfile
 function handleProfileFormSubmit({name, job}) {
-  popupProfile.renderLoadingStart();
+  popupProfile.renderLoading(true);
   api.editProfile(name, job)
   .then(() => {
     profileInfo.setUserInfo({
       newUsername: name,
       newDescription: job
     })
+    popupProfile.close();
   })
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
-    popupProfile.renderLoadingEnd();
+    popupProfile.renderLoading(false);
   })
 };
 
 // Функция обработчик самбита popupAddCard
 function handleAddFormSubmit({place, link}) {
-  popupAddCard.renderLoadingStart();
+  popupAddCard.renderLoading(true);
   api.getUserInfo()
   .then(userInfo => {
     api.addCard(place, link)
@@ -171,12 +172,13 @@ function handleAddFormSubmit({place, link}) {
     .catch((err) => {
       console.log(err);
     })
+    popupAddCard.close();
   })
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
-    popupAddCard.renderLoadingEnd();
+    popupAddCard.renderLoading(false);
   })
 };
 
@@ -185,16 +187,17 @@ function handleAvatarFormSubmit({avatar}) {
   let img = document.createElement('img');
   img.src = avatar;
   img.onload = function() {
-    popupAvatar.renderLoadingStart();
+    popupAvatar.renderLoading(true);
     api.updateAvatar(avatar)
     .then(() => {
       profileAvatar.src = avatar;
+      popupAvatar.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      popupAvatar.renderLoadingEnd();
+      popupAvatar.renderLoading(false);
     })
   }
   img.onerror = function() {

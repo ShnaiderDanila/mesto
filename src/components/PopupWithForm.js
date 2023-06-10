@@ -25,13 +25,13 @@ class PopupWithForm extends Popup {
     this._popupForm.reset();
   }
 
-  // Метод добавления нового текста кнопке самбита, в начале загрузки данных
-  renderLoadingStart() {
-    this._saveButton.textContent = "Сохранение..."
-  }
-  // Метод добавления начального текста кнопке самбита, в конце загрузки данных
-  renderLoadingEnd() {
-    this._saveButton.textContent = this._saveButtonText;
+  // Метод добавления нового текста кнопке самбита, в процессе загрузки
+  renderLoading(isLoading, loadingText='Сохранение...') {
+    if (isLoading) {
+      this._saveButton.textContent = loadingText;
+    } else {
+      this._saveButton.textContent = this._saveButtonText;
+    }
   }
 
   // Расширенный метод установки слушателей событий на попап с формой
@@ -40,7 +40,6 @@ class PopupWithForm extends Popup {
     this._popupForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this.close();
     });
   }
 }

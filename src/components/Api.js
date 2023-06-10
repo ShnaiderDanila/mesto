@@ -14,23 +14,24 @@ _renderServerResponce(res) {
   }
 }
 
+_request(url, options) {
+  return fetch(`${this._baseUrl}/${url}`, options)
+  .then(res => {
+    return this._renderServerResponce(res)
+  })
+}
+
 // Метод загрузки информации о пользователе с сервера
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request(`users/me`, {
       headers: this._headers
-    })
-    .then(res => {
-      return this._renderServerResponce(res)
     })
   }
 
 // Метод загрузки карточек с сервера
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._request(`cards`, {
       headers: this._headers
-    })
-    .then(res => {
-      return this._renderServerResponce(res)
     })
   }
 
@@ -41,7 +42,7 @@ getAppInfo() {
 
 // Метод редактирования профиля на сервере
   editProfile(name, about) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request(`users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -49,14 +50,11 @@ getAppInfo() {
         about: about
       })
     })
-    .then(res => {
-      return this._renderServerResponce(res)
-    })
   }
 
 // Метод добавления новой карточки на сервер
   addCard(name, link) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._request(`cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -64,55 +62,40 @@ getAppInfo() {
         link: link
       })
     })
-    .then(res => {
-      return this._renderServerResponce(res)
-    })
   }
 
   // Метод удаления карточки с сервера
   deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return this._request(`cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
-    })
-    .then(res => {
-      return this._renderServerResponce(res)
     })
   }
 
   // Метод постановки лайка на сервере
   setLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return this._request(`cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers,
-    })
-    .then(res => {
-      return this._renderServerResponce(res)
     })
   }
 
   // Метод снятия лайка на сервере
     removeLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return this._request(`cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
-    })
-    .then(res => {
-      return this._renderServerResponce(res)
     })
   }
 
   // Метод обновление аватара пользователя на сервере
   updateAvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return this._request(`users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar
       })
-    })
-    .then(res => {
-      return this._renderServerResponce(res)
     })
   }
 }

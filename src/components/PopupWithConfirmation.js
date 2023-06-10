@@ -6,10 +6,6 @@ class PopupWithConfirmation extends Popup {
     this._buttonConfirm = this._popup.querySelector('.popup__button-save');
   }
 
-  open() {
-    super.open();
-  }
-
   setDeleteConfirm(callbackFunction) {
     this._handleDeleteConfirm = callbackFunction;
   }

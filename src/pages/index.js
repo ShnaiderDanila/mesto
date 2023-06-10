@@ -50,72 +50,73 @@ function enableValidation(config) {
 
 enableValidation(validationConfig);
 
-// Создание экземпляров классов
+// Функция создания карточки
+function createCard(item, userInfo) {
+  const cardElement = new Card
+  // Параметры класса Card
+  (item, '#card-template',
+   // Функкция обработчик клика по картинке карты
+   function handleCardImageClick(name, link) {
+    popupPicture.open(name, link);
+  },
+
+  // Функция обработчик клика по иконке удаления
+  function handleTrashClick() {
+    popupConfirmation.open();
+    popupConfirmation.setDeleteConfirm(() => {
+      api.deleteCard(item._id)
+      .then(() => {
+        cardItem.deleteCard();
+        popupConfirmation.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    })
+  },
+
+  // Функция обработчик установки лайка
+  function handleLikeSet() {
+    api.setLike(item._id)
+    .then((item) => {
+      cardItem.addLike();
+      cardItem.changeLikeCounter(item);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  },
+
+  // Функция обработчик удаления лайка
+  function handleLikeDelete() {
+    api.removeLike(item._id)
+    .then((item) => {
+      cardItem.deleteLike();
+      cardItem.changeLikeCounter(item);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  },
+  // Последний параметр id Пользователя
+  userInfo._id)
+
+  return cardElement
+}
+
 // Экземпляр класса Section
-const card = new Section ({
+const cardSection = new Section ({
   renderer: (item, userInfo) => {
-    const cardItem = new Card
-    // Параметры класса Card
-    (item, '#card-template',
-
-    // Функкция обработчик клика по картинке карты
-    function handleCardImageClick(name, link) {
-      popupPicture.open(name, link);
-    },
-
-    // Функция обработчик клика по иконке удаления
-    function handleTrashClick() {
-      popupConfirmation.open();
-      popupConfirmation.setDeleteConfirm(() => {
-        api.deleteCard(item._id)
-        .then(() => {
-          cardItem.deleteCard();
-          popupConfirmation.close();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      })
-    },
-
-    // Функция обработчик установки лайка
-    function handleLikeSet() {
-      api.setLike(item._id)
-      .then((item) => {
-        cardItem.addLike();
-        cardItem.changeLikeCounter(item);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    },
-
-    // Функция обработчик удаления лайка
-    function handleLikeDelete() {
-      api.removeLike(item._id)
-      .then((item) => {
-        cardItem.deleteLike();
-        cardItem.changeLikeCounter(item);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    },
-    // Последний параметр id Пользователя
-    userInfo._id)
-
-    // Тело метода renderer
-    // Генерация карточки
-    const cardElement = cardItem.generateCard();
-    card.addItem(cardElement);
-
+    // Создание карточки и добавление её в контейнер gallery__list
+    const cardElement = createCard(item, userInfo);
+    cardSection.addItem(cardElement);
   },
 }, '.gallery__list')
 
 // Функция запуска рендер-функции класса Section (для добавления начальных карточек на страницу)
 api.getAppInfo()
 .then(([ initialCards, userInfo ]) => {
-  card.renderItems(initialCards.reverse(), userInfo);
+  cardSection.renderItems(initialCards.reverse(), userInfo);
   profileTitle.textContent = userInfo.name;
   profileSubtitle.textContent = userInfo.about;
   profileAvatar.src = userInfo.avatar;

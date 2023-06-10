@@ -3,7 +3,6 @@ class UserInfo {
     this._name = document.querySelector(name);
     this._about = document.querySelector(about);
     this._avatar = document.querySelector(avatar);
-    this._id = id;
   }
 
 // Метод возвращения объекта с данными пользователя

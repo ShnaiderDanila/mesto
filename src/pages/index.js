@@ -137,64 +137,65 @@ const profileInfo = new UserInfo({
   avatar: '.profile__avatar-image'
 });
 
-// Функция обработчик самбита popupProfile
-function handleProfileFormSubmit({name, job}) {
-  popupProfile.renderLoading(true);
-  api.editProfile(name, job)
+// Универсальная функция обработки сабмитов в связке с сервером
+function handleSubmit(request, popupInstance, loadingText = "Сохранение...") {
+  popupInstance.renderLoading(true, loadingText);
+  request()
   .then(() => {
-    profileInfo.setUserInfo({
-      username: name,
-      about: job
-    })
-    popupProfile.close();
+    popupInstance.close()
   })
   .catch((err) => {
-    console.log(err);
+    console.error(`Ошибка: ${err}`);
   })
   .finally(() => {
-    popupProfile.renderLoading(false);
-  })
+    popupInstance.renderLoading(false);
+  });
+}
+
+// Функция обработчик самбита popupProfile
+function handleProfileFormSubmit({name, job}) {
+  function makeRequest() {
+    return api.editProfile(name, job)
+    .then(() => {
+      profileInfo.setUserInfo({
+        username: name,
+        about: job
+      })
+    })
+  }
+  handleSubmit(makeRequest, popupAddCard);
 };
+
 
 // Функция обработчик самбита popupAddCard
 function handleAddFormSubmit({place, link}) {
-  popupAddCard.renderLoading(true);
-  api.getUserInfo()
-  .then(userInfo => {
-    api.addCard(place, link)
-    .then(result => {
-      card.renderItems([result], userInfo)
+  function makeRequest() {
+    api.getUserInfo()
+    .then(userInfo => {
+      api.addCard(place, link)
+      .then(result => {
+        cardSection.renderItems([result], userInfo)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     })
-    .catch((err) => {
-      console.log(err);
-    })
-    popupAddCard.close();
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    popupAddCard.renderLoading(false);
-  })
+  }
+  handleSubmit(makeRequest, popupProfile);
 };
 
 // Функция обработчик самбита popupAvatar
 function handleAvatarFormSubmit({avatar}) {
-  let img = document.createElement('img');
+  const img = document.createElement('img');
   img.src = avatar;
   img.onload = function() {
-    popupAvatar.renderLoading(true);
-    api.updateAvatar(avatar)
-    .then(() => {
-      profileAvatar.src = avatar;
-      popupAvatar.close();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      popupAvatar.renderLoading(false);
-    })
+    function makeRequest() {
+      api.updateAvatar(avatar)
+      .then(() => {
+        profileAvatar.src = avatar;
+      })
+    }
+    handleSubmit(makeRequest, popupAvatar);
   }
   img.onerror = function() {
     alert('Введена некорректная ссылка');
@@ -228,7 +229,6 @@ function openProfilePopup() {
 
 // Функция активациии PopupAddCard
 function openAddPopup() {
-  popupAddCard.close();
   popupAddCard.open();
   formValidators['add-card'].resetValidation();
 }

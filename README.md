@@ -22,7 +22,6 @@
 ### С применением:
 * BEM Methodology;
 * File Structure and File Paths (Nested BEM);
-* Git;
 * Flexbox;
 * Grid Layout;
 * Animation and Transform using CSS;

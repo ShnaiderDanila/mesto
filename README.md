@@ -43,7 +43,7 @@ npm run dev
 ```
 
 ## Планы по доработке проекта:
-1. Подключение фреймворка React.js
+Подключение фреймворка React.js
 
 ## Макеты проектной работы в Figma:
 - [Макет №1](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)

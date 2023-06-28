@@ -31,7 +31,7 @@
 ## Инструкция по установке: 
 
 ```
-git clone https://github.com/MelnikovAleksei/mesto.git
+git clone https://github.com/Shnd3r/mesto.git
 
 cd mesto
 

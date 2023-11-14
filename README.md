@@ -33,12 +33,16 @@
 ```
 git clone https://github.com/Shnd3r/mesto.git
 
+```
 cd mesto
 
+```
 npm i
 
+```
 npm run build
 
+```
 npm run dev
 ```
 

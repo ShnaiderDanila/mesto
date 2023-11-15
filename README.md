@@ -59,6 +59,11 @@ npm run dev
 - [Чеклист №5](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-8.pdf)
 - [Чеклист №6](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-9.pdf)
   
-2023© Шнайдер Данила
+## Автор
+
+**Данила Шнайдер**
+
+- E-mail: [d.shnder@gmail.com](mailto:d.shnder@gmail.com)
+- Telegram: [@shnd3r](https://t.me/shnd3r)
 
 

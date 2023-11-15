@@ -1,6 +1,8 @@
 # [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&pause=1000&width=435&lines=Проект:+"Mesto")](https://git.io/typing-svg)
 Создан в рамках учебы в [Яндекс.Практикум](https://practicum.yandex.ru/) на факультете ["Веб-разработчик"](https://practicum.yandex.ru/web/)
 
+![Mesto](https://github.com/Shnd3r/mesto/assets/116545792/7c392a94-44c8-4eea-802d-c490ab3286c1)
+
 ## Описание проекта:
 "Mesto" - это интерактивная страница, где пользователи могут делиться фотографиями. Создана в рамках прохождения 4-9 спринтов курса.
 [Ссылка на проект - GitHub Pages](https://shnd3r.github.io/mesto/ "Сайт проекта Mesto") 
